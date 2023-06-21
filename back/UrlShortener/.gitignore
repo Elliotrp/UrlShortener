@@ -1,0 +1,31 @@
+# Binaries
+bin/
+obj/
+
+# Dependencies
+packages/
+*.nuget.*
+
+# User-specific files
+*.user
+*.suo
+.vs/
+
+# Sensitive information
+appsettings.json
+appsettings.Development.json
+secrets.json
+
+# Logs and temporary files
+logs/
+temp/
+
+# IDE-specific files
+.vscode/
+*.sln
+
+# Generated code
+Generated/
+
+# Local settings
+launchSettings.json

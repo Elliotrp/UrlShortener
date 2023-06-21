@@ -1,0 +1,14 @@
+mat-card {
+   background-color: rgb(107, 50, 50);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 100px 50px;
+   box-shadow: 0 5px 6px rgba(0,0,0,0.2);
+}
+
+mat-card-title {
+   font-size: xx-large;
+   margin: 20px 0 0 50px;
+   font-family:'Segoe UI';
+}
