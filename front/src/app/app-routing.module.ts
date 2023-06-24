@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageComponent } from './main-page/main-page.component';
+import { UrlShortener } from './components/pages/url-shortener/url-shortener.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPageComponent
+    component: UrlShortener
   }
 ];
 
