@@ -26,9 +26,9 @@ namespace UrlShortener.Controllers
         }
 
         [HttpPost]
-        public CreateUrlResponse Create([FromBody] CreateUrlRequest request)
+        public IActionResult Create([FromBody] CreateUrlRequest request)
         {
-            return this.urlService.CreateUrl(request);
+            return Ok(this.urlService.CreateUrl(request));
         }
     }
 }

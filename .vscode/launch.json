@@ -5,15 +5,40 @@
    "version": "0.2.0",
    "configurations": [
       {
-         "name": ".NET Core Launch (console)",
+         "name": "Backend",
          "type": "coreclr",
          "request": "launch",
-         "preLaunchTask": "build",
+         "preLaunchTask": "buildBE",
          "program": "${workspaceFolder}/back/UrlShortener/bin/Debug/net7.0/UrlShortener.dll",
          "args": [],
          "cwd": "${workspaceFolder}/back/UrlShortener",
          "console": "internalConsole",
          "stopAtEntry": false
+       },
+       {
+         "name": "Serve Angular App",
+         "type": "node",
+         "request": "launch",
+         "program": "${workspaceFolder}/front/node_modules/@angular/cli/bin/ng",
+         "args": [
+           "serve"
+         ],
+         "cwd": "${workspaceFolder}/front",
+         "console": "integratedTerminal"
+       },
+       {
+         "name": "Frontend",
+         "type": "chrome",
+         "request": "launch",
+         "url": "http://localhost:4200",
+         "webRoot": "${workspaceFolder}/front",
+         "sourceMaps": true,
+         "userDataDir": "${workspaceFolder}/.vscode/chrome"
        }
-   ]
+   ],
+   "compounds": [
+     {
+       "name": "Launch Backend and Frontend",
+       "configurations": ["Backend", "Serve Angular App", "Frontend"]
+     }
 }
