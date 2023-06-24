@@ -7,11 +7,15 @@ import { Url } from 'src/app/models/Url';
   providedIn: 'root'
 })
 export class UrlService {
-  private apiUrl = 'https://localhost:5001'; // Replace with your backend API URL
+  private apiUrl = 'https://localhost:5001';
 
   constructor(private http: HttpClient) { }
 
-  createUrl(url: Url): Observable<Url> {
+  public createUrl(url: Url): Observable<Url> {
     return this.http.post<Url>(`${this.apiUrl}/Url`, url);
+  }
+
+  public getUrl(shortKey: Url): Observable<Url> {
+    return this.http.get<Url>(`${this.apiUrl}/Url/${shortKey}`);
   }
 }
