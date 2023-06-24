@@ -1,4 +1,6 @@
-﻿using System;
+﻿namespace UrlShortener.Controllers;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,45 +10,42 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using UrlShortener.Models;
 using UrlShortener.Dtos;
 
-namespace UrlShortener.Controllers
+[ApiController]
+[Route("[controller]")]
+public class UrlController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class UrlController : ControllerBase
+    private readonly ILogger<UrlController> _logger;
+    private readonly IUrlService urlService;
+
+    public UrlController(
+        ILogger<UrlController> logger,
+        IUrlService urlService)
     {
-        private readonly ILogger<UrlController> _logger;
-        private readonly IUrlService urlService;
+        _logger = logger;
+        this.urlService = urlService;
+    }
 
-        public UrlController(
-            ILogger<UrlController> logger,
-            IUrlService urlService)
-        {
-            _logger = logger;
-            this.urlService = urlService;
+    [HttpPost]
+    public IActionResult Create([FromBody] CreateUrlRequest request)
+    {
+        CreateUrlResponse response = this.urlService.CreateUrl(request);
+
+        if (response.Error is null) {
+            return Ok(response);
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] CreateUrlRequest request)
-        {
-            CreateUrlResponse response = this.urlService.CreateUrl(request);
+        return StatusCode(500, response.Error);
+    }
 
-            if (response.Error is null) {
-                return Ok(response);
-            }
+    [HttpGet]
+    [Route("{shortKey}")]
+    public IActionResult Get(string shortKey) {
+        GetUrlResponse response = this.urlService.GetUrl(shortKey);
 
-            return StatusCode(500, response.Error);
+        if (response.Error is null) {
+            return Ok(response);
         }
 
-        [HttpGet]
-        [Route("{shortKey}")]
-        public IActionResult Get(string shortKey) {
-            GetUrlResponse response = this.urlService.GetUrl(shortKey);
-
-            if (response.Error is null) {
-                return Ok(response);
-            }
-
-            return NotFound(response.Error);
-        }
+        return NotFound(response.Error);
     }
 }

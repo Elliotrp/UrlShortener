@@ -40,7 +40,8 @@ public class UrlService : IUrlService
       return response;
    }
 
-   public GetUrlResponse GetUrl(string shortKey) {
+   public GetUrlResponse GetUrl(string shortKey)
+   {
       GetUrlResponse response = new GetUrlResponse();
 
       try {

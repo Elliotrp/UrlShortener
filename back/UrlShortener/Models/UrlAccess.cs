@@ -1,13 +1,12 @@
-namespace UrlShortener.Models {
+namespace UrlShortener.Models;
 
-   using System;
+using System;
 
-   public class UrlAccess
-   {
-      public int Id { get; set; }
+public class UrlAccess
+{
+   public int Id { get; set; }
 
-      public int UrlId { get; set; }
+   public int UrlId { get; set; }
 
-      public DateTime AccessedDate { get; set; }
-   }
+   public DateTime AccessedDate { get; set; }
 }
