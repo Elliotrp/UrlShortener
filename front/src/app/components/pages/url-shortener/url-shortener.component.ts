@@ -16,7 +16,7 @@ export class UrlShortener {
 	shorten() {
 		const requestBody: Url = { targetUrl: this.url };
 		this.urlService.createUrl(requestBody).subscribe((response) => {
-			this.shortUrl = response.shortUrl;
+			this.shortUrl = `${window.location.origin}/${response.shortUrl}`;
 		});
 		
 		// store result in session storage and display in a table component
