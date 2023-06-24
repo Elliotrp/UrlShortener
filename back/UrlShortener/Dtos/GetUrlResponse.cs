@@ -2,7 +2,7 @@
 
 using System;
 
-public class GetUrlResponse
+public class GetUrlResponse : BaseResponse
 {
    public string TargetUrl { get; set; }
 }

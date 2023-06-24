@@ -1,6 +1,7 @@
 ﻿namespace UrlShortener;
 
 using System;
+using System.Linq;
 using UrlShortener.Models;
 using UrlShortener.Dtos;
 
@@ -23,9 +24,42 @@ public class UrlService : IUrlService
             CreatedDate = DateTime.UtcNow
       };
 
-      this.context.Urls.Add(newEntity);
-      this.context.SaveChanges();
+      CreateUrlResponse response = new CreateUrlResponse();
+
+      try {
+         this.context.Urls.Add(newEntity);
+         this.context.SaveChanges();
+         response.ShortUrl = shortUrl;
+      } catch {
+         response.Error = new Error {
+            ErrorCode = "SaveError",
+            ErrorMessage = "An error occurred while saving the data. Please try again later."
+         };
+      }
+
+      return response;
+   }
+
+   public GetUrlResponse GetUrl(string shortKey) {
+      GetUrlResponse response = new GetUrlResponse();
+
+      try {
+         Url url = this.context.Urls.FirstOrDefault(u => u.ShortUrl == shortKey);
+         if (url is null) {
+            response.Error = new Error {
+               ErrorCode = "UrlNotFound",
+               ErrorMessage = $"Url with { nameof(shortKey) } { shortKey } was not found"
+            };
+         } else {
+            response.TargetUrl = url.TargetUrl;
+         }
+      } catch {
+         response.Error = new Error {
+            ErrorCode = "GetError",
+            ErrorMessage = "An error occurred while retrieving the data. Please try again later."
+         };
+      }
       
-      return new CreateUrlResponse { ShortUrl = shortUrl };
+      return response;
    }
 }

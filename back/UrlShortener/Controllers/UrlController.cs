@@ -28,7 +28,25 @@ namespace UrlShortener.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateUrlRequest request)
         {
-            return Ok(this.urlService.CreateUrl(request));
+            CreateUrlResponse response = this.urlService.CreateUrl(request);
+
+            if (response.Error is null) {
+                return Ok(response);
+            }
+
+            return StatusCode(500, response.Error);
+        }
+
+        [HttpGet]
+        [Route("{shortKey}")]
+        public IActionResult Get(string shortKey) {
+            GetUrlResponse response = this.urlService.GetUrl(shortKey);
+
+            if (response.Error is null) {
+                return Ok(response);
+            }
+
+            return NotFound(response.Error);
         }
     }
 }

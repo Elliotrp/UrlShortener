@@ -4,5 +4,5 @@ using System;
 
 public class BaseResponse
 {
-
+   public Error Error { get; set; }
 }
