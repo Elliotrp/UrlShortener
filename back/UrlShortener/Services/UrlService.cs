@@ -1,9 +1,10 @@
-﻿namespace UrlShortener;
+﻿namespace UrlShortener.Services;
 
 using System;
 using System.Linq;
 using UrlShortener.Models;
 using UrlShortener.Dtos;
+using UrlShortener.Helpers;
 
 public class UrlService : IUrlService
 {

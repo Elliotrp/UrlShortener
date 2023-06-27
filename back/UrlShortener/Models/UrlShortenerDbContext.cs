@@ -1,7 +1,6 @@
 namespace UrlShortener.Models;
 
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 public class UrlShortenerDbContext : DbContext
 {

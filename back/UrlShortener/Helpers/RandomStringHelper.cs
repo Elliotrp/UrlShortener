@@ -1,4 +1,4 @@
-﻿namespace UrlShortener;
+﻿namespace UrlShortener.Helpers;
 
 using System;
 using System.Linq;

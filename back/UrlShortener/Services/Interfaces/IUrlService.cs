@@ -1,7 +1,5 @@
-﻿namespace UrlShortener;
+﻿namespace UrlShortener.Services;
 
-using System;
-using UrlShortener.Models;
 using UrlShortener.Dtos;
 
 public interface IUrlService

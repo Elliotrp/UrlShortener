@@ -1,14 +1,8 @@
 ﻿namespace UrlShortener.Controllers;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using UrlShortener.Models;
 using UrlShortener.Dtos;
+using UrlShortener.Services;
 
 [ApiController]
 [Route("[controller]")]
