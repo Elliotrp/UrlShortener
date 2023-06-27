@@ -30,4 +30,4 @@ import { FormsModule } from '@angular/forms';
    ],
    providers: [],
 })
-export class MainPageModule { }
+export class UrlShortenerModule { }

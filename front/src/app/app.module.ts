@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UrlShortener } from './components/pages/url-shortener/url-shortener.component';
-import { MainPageModule } from './components/pages/url-shortener/url-shortener.component.module';
+import { UrlShortenerModule } from './components/pages/url-shortener/url-shortener.component.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +11,7 @@ import { MainPageModule } from './components/pages/url-shortener/url-shortener.c
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MainPageModule
+    UrlShortenerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

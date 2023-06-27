@@ -20,7 +20,7 @@ export class ShortKeyGuard implements CanActivate, CanActivateChild {
             window.location.href = this.ensureProtocol(response.targetUrl);
             return false;
           }
-    
+          this.router.navigate(['..']);
           return true;
         })
       );

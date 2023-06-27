@@ -13,7 +13,7 @@ export class UrlShortener {
 
 	constructor(private readonly urlService: UrlService) {}
 
-	shorten() {
+	public shorten(): void {
 		const requestBody: Url = { targetUrl: this.url };
 		this.urlService.createUrl(requestBody).subscribe((response) => {
 			this.shortUrl = `${window.location.origin}/${response.shortUrl}`;
