@@ -1,19 +1,20 @@
 <section>
   <mat-card>
-    <mat-card-content center>
-      <mat-form-field>
-        <input matInput placeholder="Enter URL to shorten" [(ngModel)]="url">
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="shorten()">Shorten URL</button>
+    <mat-card-content>
+      <form (ngSubmit)="shorten()" class="form-group">
+        <mat-form-field appearance="outline" class="url-input" subscriptSizing="dynamic">
+          <mat-label for="inputUrl">Enter URL</mat-label>
+          <input matInput [(ngModel)]="inputUrl" placeholder="https://example.com" name="inputUrl">
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="shorten-button">Shorten</button>
+      </form>
     </mat-card-content>
   </mat-card>
-  <mat-card *ngIf="shortUrl">
-     <mat-card-content>
-        <p>Short URL:</p>
-        <a href="{{shortUrl}}">{{shortUrl}}</a>
-     </mat-card-content>
-     <mat-card-actions>
-       <button mat-button ngxClipboard [cbContent]="shortUrl">Copy Short URL</button>
-     </mat-card-actions>
+</section>
+<section class="shortened-url-section">
+  <mat-card *ngIf="shortenedUrls.length">
+    <mat-card-content>
+      <app-url-info [urls]="shortenedUrls"></app-url-info>
+    </mat-card-content>
   </mat-card>
 </section>

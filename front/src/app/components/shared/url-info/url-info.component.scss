@@ -1,0 +1,31 @@
+ul {
+   list-style-type: none;
+   padding-left: 0;
+   display: flex;
+   flex-direction: column;
+   gap: 50px;
+}
+
+.target-url {
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+   font-family: sans-serif;
+}
+
+li {
+   display: grid;
+   align-items: center;
+   grid-template-columns: 0.5fr 1fr 0.5fr;
+   background: aliceblue;
+}
+
+@media (max-width: 650px) {
+   li {
+      padding-top: 10px;
+      display: grid;
+      align-items: center;
+      grid-template-columns: none;
+      gap: 10px
+   }
+}

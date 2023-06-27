@@ -3,3 +3,25 @@ section {
    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
    border-radius: 5px;
 }
+
+.form-group {
+   display: flex;
+   align-items: baseline;
+   gap: 10px;
+ }
+ 
+ .url-input {
+   flex: 1;
+   margin-bottom: 0;
+ }
+ 
+ .shorten-button {
+   padding-top: 28px;
+   padding-bottom: 26px;
+ }
+
+ .shortened-url-section {
+   margin-top: 30px;
+ }
+
+ 
