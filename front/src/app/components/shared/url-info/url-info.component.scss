@@ -23,8 +23,6 @@ li {
 @media (max-width: 650px) {
    li {
       padding-top: 10px;
-      display: grid;
-      align-items: center;
       grid-template-columns: none;
       gap: 10px
    }
