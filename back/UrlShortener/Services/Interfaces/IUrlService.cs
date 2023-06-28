@@ -4,7 +4,7 @@ using UrlShortener.Dtos;
 
 public interface IUrlService
 {
-   public CreateUrlResponse CreateUrl(CreateUrlRequest request);
+   public BaseUrlResponse CreateUrl(CreateUrlRequest request);
    
-   public GetUrlResponse GetUrl(string shortKey);
+   public BaseUrlResponse GetUrl(string shortKey);
 }

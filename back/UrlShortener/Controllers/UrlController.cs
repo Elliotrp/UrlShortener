@@ -1,4 +1,6 @@
 ﻿namespace UrlShortener.Controllers;
+
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrlShortener.Dtos;
@@ -8,24 +10,24 @@ using UrlShortener.Services;
 [Route("[controller]")]
 public class UrlController : ControllerBase
 {
-    private readonly ILogger<UrlController> _logger;
+    private readonly ILogger<UrlController> logger;
     private readonly IUrlService urlService;
 
     public UrlController(
         ILogger<UrlController> logger,
         IUrlService urlService)
     {
-        _logger = logger;
+        this.logger = logger;
         this.urlService = urlService;
     }
 
     [HttpPost]
     public IActionResult Create([FromBody] CreateUrlRequest request)
     {
-        CreateUrlResponse response = this.urlService.CreateUrl(request);
+        BaseUrlResponse response = this.urlService.CreateUrl(request);
 
         if (response.Error is null) {
-            return Ok(response);
+            return Created("/Url", response);
         }
 
         return StatusCode(500, response.Error);
@@ -34,7 +36,7 @@ public class UrlController : ControllerBase
     [HttpGet]
     [Route("{shortKey}")]
     public IActionResult Get(string shortKey) {
-        GetUrlResponse response = this.urlService.GetUrl(shortKey);
+        BaseUrlResponse response = this.urlService.GetUrl(shortKey);
 
         if (response.Error is null) {
             return Ok(response);
