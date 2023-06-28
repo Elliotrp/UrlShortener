@@ -10,5 +10,5 @@ public class UrlShortenerDbContext : DbContext
    
    public DbSet<Url> Urls { get; set; }
 
-   public DbSet<Url> UrlAccesses { get; set; }
+   public DbSet<UrlAccess> UrlAccesses { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿namespace UrlShortener.Controllers;
 
-using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrlShortener.Dtos;
@@ -22,9 +22,9 @@ public class UrlController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] CreateUrlRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateUrlRequest request)
     {
-        BaseUrlResponse response = this.urlService.CreateUrl(request);
+        BaseUrlResponse response = await this.urlService.CreateUrl(request);
 
         if (response.Error is null) {
             return Created("/Url", response);
@@ -35,8 +35,8 @@ public class UrlController : ControllerBase
 
     [HttpGet]
     [Route("{shortKey}")]
-    public IActionResult Get(string shortKey) {
-        BaseUrlResponse response = this.urlService.GetUrl(shortKey);
+    public async Task<IActionResult> Get(string shortKey) {
+        BaseUrlResponse response = await this.urlService.GetUrl(shortKey);
 
         if (response.Error is null) {
             return Ok(response);
