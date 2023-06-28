@@ -18,7 +18,7 @@ export class UrlShortener {
 
 	public shorten(): void {
 		if (!validateUrl(this.inputUrl)) {
-			this.snackBar.open('Please enter a valid url.', 'Close', {
+			this.snackBar.open('Please enter a valid url.', 'Dismiss', {
 				duration: 3000
 			 });
 			 return;
