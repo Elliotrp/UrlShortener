@@ -26,7 +26,7 @@ export class UrlShortener {
 
 		const requestBody: Url = { targetUrl: this.inputUrl };
 		this.urlService.createUrl(requestBody).subscribe((response) => {
-			this.shortenedUrls.push(new Url(response.id, `${window.location.origin}/${response.shortUrl}`, this.inputUrl));
+			this.shortenedUrls.push(new Url(response.id, `${window.location.origin}/${response.shortUrl}`, response.targetUrl));
 			this.inputUrl = undefined;
 		});
 		

@@ -1,18 +1,28 @@
 
 <ul>
    <li *ngFor="let url of urls">
-      <p matTooltip="{{url.targetUrl}}" class="target-url mat-typography">{{url.targetUrl}}</p>
-      <a mat-stroked-button color="primary" href="{{url.shortUrl}}" matTooltip="Click to visit the shortened URL">{{url.shortUrl}}</a>
-      <span class="buttons">
-         <button mat-icon-button matSuffix ngxClipboard [cbContent]="url.shortUrl" aria-label="Copy to clipboard" matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
-            <mat-icon>content_copy</mat-icon>
-         </button>
-         <button mat-icon-button aria-label="View usage" matTooltip="View usage">
-            <mat-icon>assessment</mat-icon>
-         </button>
-         <button mat-icon-button aria-label="Delete" matTooltip="Delete">
-            <mat-icon>delete_forever</mat-icon>
-         </button>
+      <span class="wrapper">
+         <p matTooltip="{{url.targetUrl}}" class="target-url mat-typography">{{url.targetUrl}}</p>
+         <span>
+            <a mat-stroked-button color="primary" href="{{url.shortUrl}}" matTooltip="Click to visit the shortened URL" class="link-button">
+               <mat-icon>launch</mat-icon>
+               {{url.shortUrl}}
+            </a>
+         </span>
+         <span class="buttons">
+            <button mat-icon-button ngxClipboard [cbContent]="url.shortUrl" aria-label="Copy to clipboard" matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
+               <mat-icon>content_copy</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Password protection" matTooltip="Add password protection">
+               <mat-icon>lock_open</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="View usage" matTooltip="View usage">
+               <mat-icon>assessment</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="Remove" matTooltip="Remove">
+               <mat-icon>delete_forever</mat-icon>
+            </button>
+         </span>
       </span>
    </li>
 </ul>
