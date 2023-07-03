@@ -14,7 +14,7 @@
 <section class="shortened-url-section">
   <mat-card *ngIf="shortenedUrls.length">
     <mat-card-content>
-      <app-url-info [urls]="shortenedUrls"></app-url-info>
+      <app-url-info [urls]="shortenedUrls" (removeUrl)="removeUrl($event)"></app-url-info>
     </mat-card-content>
   </mat-card>
 </section>
