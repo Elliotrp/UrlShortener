@@ -33,8 +33,7 @@ public class UrlController : ControllerBase
         return StatusCode(500, response.Error);
     }
 
-    [HttpGet]
-    [Route("{shortKey}")]
+    [HttpGet("{shortKey}")]
     public async Task<IActionResult> Get(string shortKey) {
         BaseUrlResponse response = await this.urlService.GetUrl(shortKey);
 
@@ -43,5 +42,17 @@ public class UrlController : ControllerBase
         }
 
         return NotFound(response.Error);
+    }
+
+    [HttpPatch("{id}/password")]
+    public async Task<IActionResult> AddPassword(int id, [FromBody] AddPasswordRequest request)
+    {
+        BaseUrlResponse response = await this.urlService.SetPassword(id, request.Password);
+
+        if (response.Error is null) {
+            return Ok(response);
+        }
+
+        return StatusCode(500, response.Error);
     }
 }

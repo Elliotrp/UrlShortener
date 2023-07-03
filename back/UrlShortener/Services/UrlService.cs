@@ -7,6 +7,7 @@ using UrlShortener.Helpers;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
 
 public class UrlService : IUrlService
 {
@@ -62,6 +63,7 @@ public class UrlService : IUrlService
                ErrorCode = "UrlNotFound",
                ErrorMessage = $"Url with { nameof(shortKey) } { shortKey } was not found"
             };
+            return response;
          } else {
             response = new BaseUrlResponse(url);
             await this.urlAccessService.CreateUrlAccess(url);
@@ -74,6 +76,34 @@ public class UrlService : IUrlService
          };
       }
       
+      return response;
+   }
+
+   public async Task<BaseUrlResponse> SetPassword(int id, string password)
+   {
+      BaseUrlResponse response = new BaseUrlResponse();
+
+      try {
+         Url url = await this.context.Urls.FirstOrDefaultAsync(u => u.Id == id);
+         if (url is null) {
+            response.Error = new Error {
+               ErrorCode = "UrlNotFound",
+               ErrorMessage = $"Url with { nameof(id) } { id } was not found"
+            };
+            return response;
+         }
+
+         string hashedPassword = BCrypt.HashPassword(password);
+         url.Password = hashedPassword;
+         await this.context.SaveChangesAsync();
+      } catch (Exception ex) {
+         this.logger.LogError(ex, ex.Message);
+         response.Error = new Error {
+            ErrorCode = "SaveError",
+            ErrorMessage = "An error occurred while saving the data. Please try again later."
+         };
+      }
+
       return response;
    }
 }
