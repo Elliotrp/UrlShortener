@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Mvc;
 
 public class UrlService : IUrlService
 {
@@ -44,7 +45,7 @@ public class UrlService : IUrlService
       } catch (Exception ex) {
          this.logger.LogError(ex, ex.Message);
          response.Error = new Error {
-            ErrorCode = "SaveError",
+            ErrorCode = ErrorCode.SaveError,
             ErrorMessage = "An error occurred while saving the data. Please try again later."
          };
       }
@@ -52,26 +53,41 @@ public class UrlService : IUrlService
       return response;
    }
 
-   public async Task<BaseUrlResponse> GetUrl(string shortKey)
+   public async Task<BaseUrlResponse> GetUrl(string shortKey, string password)
    {
       BaseUrlResponse response = new BaseUrlResponse();
 
       try {
          Url url = await this.context.Urls.FirstOrDefaultAsync(u => u.ShortUrl == shortKey);
          if (url is null) {
-            response.Error = new Error {
-               ErrorCode = "UrlNotFound",
+            Error error = new Error {
+               ErrorCode = ErrorCode.UrlNotFound,
                ErrorMessage = $"Url with { nameof(shortKey) } { shortKey } was not found"
             };
+            this.logger.LogError(error.ErrorCode.ToString(), error.ErrorMessage);
+            response.Error = error;
             return response;
          } else {
+            if (!string.IsNullOrEmpty(url.Password) && 
+               (string.IsNullOrEmpty(password) ||
+               !BCrypt.Verify(password, url.Password)))
+            {
+               Error error = new Error {
+                  ErrorCode = ErrorCode.InvalidPassword,
+                  ErrorMessage = "The password provided was incorrect"
+               };
+               this.logger.LogError(error.ErrorCode.ToString(), error.ErrorMessage);
+               response.Error = error;
+               return response;
+            }
+
             response = new BaseUrlResponse(url);
             await this.urlAccessService.CreateUrlAccess(url);
          }
       } catch (Exception ex) {
          this.logger.LogError(ex, ex.Message);
          response.Error = new Error {
-            ErrorCode = "GetError",
+            ErrorCode = ErrorCode.GetError,
             ErrorMessage = "An error occurred while retrieving the data. Please try again later."
          };
       }
@@ -86,10 +102,12 @@ public class UrlService : IUrlService
       try {
          Url url = await this.context.Urls.FirstOrDefaultAsync(u => u.Id == id);
          if (url is null) {
-            response.Error = new Error {
-               ErrorCode = "UrlNotFound",
+            Error error = new Error {
+               ErrorCode = ErrorCode.UrlNotFound,
                ErrorMessage = $"Url with { nameof(id) } { id } was not found"
             };
+            this.logger.LogError(error.ErrorCode.ToString(), error.ErrorMessage);
+            response.Error = error;
             return response;
          }
 
@@ -99,7 +117,7 @@ public class UrlService : IUrlService
       } catch (Exception ex) {
          this.logger.LogError(ex, ex.Message);
          response.Error = new Error {
-            ErrorCode = "SaveError",
+            ErrorCode = ErrorCode.SaveError,
             ErrorMessage = "An error occurred while saving the data. Please try again later."
          };
       }
