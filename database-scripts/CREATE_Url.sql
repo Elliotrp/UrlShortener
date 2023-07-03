@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS public."Url"
     "ShortUrl" text COLLATE pg_catalog."default" NOT NULL,
     "CreatedDate" timestamp without time zone NOT NULL,
     "TargetUrl" text COLLATE pg_catalog."default" NOT NULL,
+    "Password" text COLLATE pg_catalog."default",
     CONSTRAINT "Url_pkey" PRIMARY KEY ("Id"),
     CONSTRAINT "Unique_ShortUrl" UNIQUE ("ShortUrl")
 )
