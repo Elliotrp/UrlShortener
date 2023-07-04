@@ -4,7 +4,7 @@
       <span class="wrapper">
          <p matTooltip="{{url.targetUrl}}" class="target-url mat-typography">{{url.targetUrl}}</p>
          <span>
-            <a mat-stroked-button color="primary" href="{{url.shortUrl}}" matTooltip="Click to visit the shortened URL" class="link-button">
+            <a mat-stroked-button color="primary" href="{{url.shortUrl}}" target="_blank" matTooltip="Click to visit the shortened URL" class="link-button">
                <mat-icon>launch</mat-icon>
                {{url.shortUrl}}
             </a>
