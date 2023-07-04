@@ -111,7 +111,7 @@ public class UrlService : IUrlService
             return response;
          }
 
-         string hashedPassword = BCrypt.HashPassword(password);
+         string hashedPassword = string.IsNullOrEmpty(password) ? null : BCrypt.HashPassword(password);
          url.Password = hashedPassword;
          await this.context.SaveChangesAsync();
       } catch (Exception ex) {
