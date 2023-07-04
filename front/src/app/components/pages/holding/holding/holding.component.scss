@@ -1,0 +1,32 @@
+.message {
+   font-size: x-large;
+   line-height: 30px;
+   font-weight: 500;
+   margin-bottom: 0;
+}
+
+ .wrapper {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+ 
+ .container {
+   position: fixed;
+   left: 0;
+   top: 0;
+   width: 100vw;
+   height: 100vh;
+   display: flex;
+ }
+ 
+ .center {
+   margin: auto;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 20px;
+   background: white;
+   padding: 50px;
+   border-radius: 40px;
+ }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UrlShortenerComponent } from './url-shortener.component';
+import { HoldingComponent } from './holding.component';
 
-describe('MainPageComponent', () => {
-  let component: UrlShortenerComponent;
-  let fixture: ComponentFixture<UrlShortenerComponent>;
+describe('HoldingComponent', () => {
+  let component: HoldingComponent;
+  let fixture: ComponentFixture<HoldingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UrlShortenerComponent ]
+      declarations: [ HoldingComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UrlShortenerComponent);
+    fixture = TestBed.createComponent(HoldingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

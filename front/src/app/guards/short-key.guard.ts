@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { UrlService } from '../services/url/url.service';
 
@@ -18,10 +24,10 @@ export class ShortKeyGuard implements CanActivate, CanActivateChild {
         map(response => {
           if (response.targetUrl) {
             window.location.href = this.ensureProtocol(response.targetUrl);
-            return false;
+          } else {
+            this.router.navigate(['..']);
           }
 
-          this.router.navigate(['..']);
           return true;
         })
       );

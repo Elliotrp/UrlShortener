@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UrlShortenerModule } from './components/pages/url-shortener/url-shortener.component.module';
+import { HoldingModule } from './components/pages/holding/holding/holding.component.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { UrlShortenerModule } from './components/pages/url-shortener/url-shorten
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UrlShortenerModule
+    UrlShortenerModule,
+    HoldingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

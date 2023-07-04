@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { UrlShortener } from './url-shortener.component';
+import { UrlShortenerComponent } from './url-shortener.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,10 +12,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
    declarations: [
-      UrlShortener,
+      UrlShortenerComponent,
    ],
    exports: [
-      UrlShortener
+      UrlShortenerComponent
    ],
    imports: [
       BrowserModule,

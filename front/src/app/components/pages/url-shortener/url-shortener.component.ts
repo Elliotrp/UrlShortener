@@ -11,7 +11,7 @@ import { environment } from 'src/environment';
 	templateUrl: './url-shortener.component.html',
 	styleUrls: ['./url-shortener.component.scss']
 })
-export class UrlShortener implements OnInit {
+export class UrlShortenerComponent implements OnInit {
 	public inputUrl: string | undefined;
 	public shortenedUrls: Url[] = [];
 
@@ -22,7 +22,7 @@ export class UrlShortener implements OnInit {
 	public ngOnInit(): void {
 		const storedUrls = this.localStorageService.getItem(environment.storageKeys.SHORTENED_URLS);
 		if (storedUrls) {
-			this.shortenedUrls = JSON.parse(storedUrls);
+			this.shortenedUrls = storedUrls;
 		}
 	}
 

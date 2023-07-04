@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UrlShortener } from './components/pages/url-shortener/url-shortener.component';
+import { UrlShortenerComponent } from './components/pages/url-shortener/url-shortener.component';
 import { ShortKeyGuard } from './guards/short-key.guard';
+import { HoldingComponent } from './components/pages/holding/holding/holding.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: UrlShortener
+    component: UrlShortenerComponent
   },
   {
     path: ':shortKey',
     canActivate: [ShortKeyGuard],
-    component: UrlShortener
+    component: HoldingComponent
   }
 ];
 
