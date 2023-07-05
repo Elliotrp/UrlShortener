@@ -7,10 +7,11 @@ public static class ResponseStatusHelper
 {
    public static IActionResult GetStatusCode(ControllerBase controller, BaseUrlResponse response)
    {
-      if (response.Error is null) {
+      if (response.Error is null)
+      {
          return controller.Ok(response);
       }
-      
+
       switch (response.Error.ErrorCode)
       {
          case ErrorCode.SaveError:

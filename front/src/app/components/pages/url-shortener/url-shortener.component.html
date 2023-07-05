@@ -1,24 +1,23 @@
 <section>
-  <mat-card>
-    <mat-card-content>
-      <form (ngSubmit)="shorten()" class="form-group">
-        <mat-form-field appearance="outline" class="url-input" subscriptSizing="dynamic">
-          <mat-label for="inputUrl">Enter URL</mat-label>
-          <input matInput [(ngModel)]="inputUrl" placeholder="https://example.com" name="inputUrl">
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" class="shorten-button">Shorten</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+   <mat-card>
+      <mat-card-content>
+         <form (ngSubmit)="shorten()" class="form-group">
+            <mat-form-field appearance="outline" class="url-input" subscriptSizing="dynamic">
+               <mat-label for="inputUrl">Enter URL</mat-label>
+               <input matInput [(ngModel)]="inputUrl" placeholder="https://example.com" name="inputUrl" />
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" class="shorten-button">
+               Shorten
+            </button>
+         </form>
+      </mat-card-content>
+   </mat-card>
 </section>
 <section class="shortened-url-section">
-  <mat-card *ngIf="shortenedUrls.length">
-    <mat-card-content>
-      <app-url-info
-        [urls]="shortenedUrls"
-        (removeUrl)="removeUrl($event)"
-        (passwordSet)="passwordSet($event)">
-      </app-url-info>
-    </mat-card-content>
-  </mat-card>
+   <mat-card *ngIf="shortenedUrls.length">
+      <mat-card-content>
+         <app-url-info [urls]="shortenedUrls" (removeUrl)="removeUrl($event)" (passwordSet)="passwordSet($event)">
+         </app-url-info>
+      </mat-card-content>
+   </mat-card>
 </section>

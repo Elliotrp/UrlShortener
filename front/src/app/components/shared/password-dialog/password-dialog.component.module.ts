@@ -8,15 +8,15 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [PasswordDialogComponent],
-  exports: [PasswordDialogComponent],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule
-  ]
+   declarations: [PasswordDialogComponent],
+   exports: [PasswordDialogComponent],
+   imports: [
+      CommonModule,
+      MatDialogModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      FormsModule
+   ]
 })
 export class PasswordDialogModule { }

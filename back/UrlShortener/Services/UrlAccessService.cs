@@ -19,7 +19,8 @@ public class UrlAccessService : IUrlAccessService
 
    public async Task CreateUrlAccess(Url url)
    {
-      UrlAccess newUrlAccess = new UrlAccess {
+      UrlAccess newUrlAccess = new UrlAccess
+      {
          UrlId = url.Id,
          AccessedDate = DateTime.UtcNow
       };

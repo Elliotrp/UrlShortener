@@ -11,12 +11,8 @@ import { UrlInfoComponentModule } from '../../shared/url-info/url-info.component
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-   declarations: [
-      UrlShortenerComponent,
-   ],
-   exports: [
-      UrlShortenerComponent
-   ],
+   declarations: [UrlShortenerComponent],
+   exports: [UrlShortenerComponent],
    imports: [
       BrowserModule,
       HttpClientModule,
@@ -26,7 +22,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       MatInputModule,
       FormsModule,
       UrlInfoComponentModule,
-      MatSnackBarModule
+      MatSnackBarModule,
    ],
    providers: [],
 })

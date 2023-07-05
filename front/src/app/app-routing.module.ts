@@ -5,19 +5,19 @@ import { ShortKeyGuard } from './guards/short-key.guard';
 import { HoldingComponent } from './components/pages/holding/holding/holding.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: UrlShortenerComponent
-  },
-  {
-    path: ':shortKey',
-    canActivate: [ShortKeyGuard],
-    component: HoldingComponent
-  }
+   {
+      path: '',
+      component: UrlShortenerComponent
+   },
+   {
+      path: ':shortKey',
+      canActivate: [ShortKeyGuard],
+      component: HoldingComponent
+   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+   imports: [RouterModule.forRoot(routes)],
+   exports: [RouterModule]
 })
 export class AppRoutingModule { }

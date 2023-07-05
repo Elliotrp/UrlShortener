@@ -6,16 +6,16 @@ import { UrlShortenerModule } from './components/pages/url-shortener/url-shorten
 import { HoldingModule } from './components/pages/holding/holding/holding.component.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    UrlShortenerModule,
-    HoldingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent
+   ],
+   imports: [
+      BrowserModule,
+      AppRoutingModule,
+      UrlShortenerModule,
+      HoldingModule
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
 })
 export class AppModule { }

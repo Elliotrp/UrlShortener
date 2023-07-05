@@ -1,19 +1,21 @@
-
 <ul>
    <li *ngFor="let url of urls">
       <span class="wrapper">
          <p matTooltip="{{url.targetUrl}}" class="target-url mat-typography">{{url.targetUrl}}</p>
          <span>
-            <a mat-stroked-button color="primary" href="{{url.shortUrl}}" target="_blank" matTooltip="Click to visit the shortened URL" class="link-button">
+            <a mat-stroked-button color="primary" href="{{url.shortUrl}}" target="_blank"
+               matTooltip="Click to visit the shortened URL" class="link-button">
                <mat-icon>launch</mat-icon>
                {{url.shortUrl}}
             </a>
          </span>
          <span class="buttons">
-            <button mat-icon-button ngxClipboard [cbContent]="url.shortUrl" aria-label="Copy to clipboard" matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
+            <button mat-icon-button ngxClipboard [cbContent]="url.shortUrl" aria-label="Copy to clipboard"
+               matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
                <mat-icon>content_copy</mat-icon>
             </button>
-            <button mat-icon-button aria-label="Password protection" matTooltip="Edit password protection" (click)="showPasswordDialog(url)">
+            <button mat-icon-button aria-label="Password protection" matTooltip="Edit password protection"
+               (click)="showPasswordDialog(url)">
                <mat-icon *ngIf="url.password">lock</mat-icon>
                <mat-icon *ngIf="!url.password">lock_open</mat-icon>
             </button>

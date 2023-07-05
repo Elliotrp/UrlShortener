@@ -6,17 +6,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [
-    HoldingComponent
+	declarations: [
+		HoldingComponent
  ],
  exports: [
-    HoldingComponent
+		HoldingComponent
  ],
  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    MatProgressSpinnerModule
-  ]
+		BrowserModule,
+		BrowserAnimationsModule,
+		CommonModule,
+		MatProgressSpinnerModule
+	]
 })
 export class HoldingModule { }

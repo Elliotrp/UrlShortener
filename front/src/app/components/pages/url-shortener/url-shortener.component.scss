@@ -1,4 +1,4 @@
-@import '../../../../variables';
+@import "../../../../variables";
 
 section {
    background: white;
@@ -10,25 +10,25 @@ section {
    display: flex;
    align-items: baseline;
    gap: 10px;
- }
- 
- .url-input {
+}
+
+.url-input {
    flex: 1;
    margin-bottom: 0;
- }
- 
- .shorten-button {
+}
+
+.shorten-button {
    padding-top: 28px;
    padding-bottom: 26px;
- }
+}
 
- .shortened-url-section {
+.shortened-url-section {
    margin-top: 30px;
- }
+}
 
 @media (max-width: $x-small-screen-width) {
-  .form-group {
-    flex-direction: column;
-    align-items: normal;
-  }
+   .form-group {
+      flex-direction: column;
+      align-items: normal;
+   }
 }

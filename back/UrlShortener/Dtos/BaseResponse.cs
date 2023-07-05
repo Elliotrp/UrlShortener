@@ -4,8 +4,9 @@ using UrlShortener.Models;
 
 public class BaseUrlResponse : Url
 {
-   public BaseUrlResponse() {}
-   public BaseUrlResponse(Url url) {
+   public BaseUrlResponse() { }
+   public BaseUrlResponse(Url url)
+   {
       this.Id = url.Id;
       this.ShortUrl = url.ShortUrl;
       this.TargetUrl = url.TargetUrl;

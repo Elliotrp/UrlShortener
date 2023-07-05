@@ -4,37 +4,36 @@ import { Url } from 'src/app/models/Url';
 import { IPasswordDialogResult } from './password-dialog-result.interface';
 
 @Component({
-	selector: 'app-password-dialog',
-	templateUrl: './password-dialog.component.html',
-	styleUrls: ['./password-dialog.component.scss']
+   selector: 'app-password-dialog',
+   templateUrl: './password-dialog.component.html'
 })
 export class PasswordDialogComponent {
-	public inputText: string | null = null;
-	public showValidation: boolean = false;
+   public inputText: string | null = null;
+   public showValidation: boolean = false;
 
-	constructor(public dialogRef: MatDialogRef<PasswordDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public url: Url) {}
+   constructor(public dialogRef: MatDialogRef<PasswordDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) public url: Url) { }
 
-	public cancel(): void {
-		const result: IPasswordDialogResult = { submitted: false };
-		this.dialogRef.close(result);
-	}
+   public cancel(): void {
+      const result: IPasswordDialogResult = { submitted: false };
+      this.dialogRef.close(result);
+   }
 
-	public set(): void {
-		if (this.inputText) {
-			this.submit();
-		} else {
-			this.showValidation = true;
-		}
-	}
+   public set(): void {
+      if (this.inputText) {
+         this.submit();
+      } else {
+         this.showValidation = true;
+      }
+   }
 
-	public remove(): void {
-		this.inputText = null;
-		this.submit();
-	}	
+   public remove(): void {
+      this.inputText = null;
+      this.submit();
+   }
 
-	private submit(): void {
-		const result: IPasswordDialogResult = { submitted: true, password: this.inputText };
-		this.dialogRef.close(result);
-	}
+   private submit(): void {
+      const result: IPasswordDialogResult = { submitted: true, password: this.inputText };
+      this.dialogRef.close(result);
+   }
 }

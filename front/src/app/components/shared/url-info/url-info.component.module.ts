@@ -12,21 +12,21 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PasswordDialogModule } from '../password-dialog/password-dialog.component.module';
 
 @NgModule({
-  declarations: [UrlInfoComponent],
-  imports: [
-    BrowserAnimationsModule,
-    CommonModule,
-    ClipboardModule,
-    MatButtonModule,
-    MatCardModule,
-    MatDialogModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    PasswordDialogModule
-  ],
-  exports: [
-    UrlInfoComponent
-  ]
+   declarations: [UrlInfoComponent],
+   imports: [
+      BrowserAnimationsModule,
+      CommonModule,
+      ClipboardModule,
+      MatButtonModule,
+      MatCardModule,
+      MatDialogModule,
+      MatIconModule,
+      MatSnackBarModule,
+      MatTooltipModule,
+      PasswordDialogModule
+   ],
+   exports: [
+      UrlInfoComponent
+   ]
 })
 export class UrlInfoComponentModule { }
