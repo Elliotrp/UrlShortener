@@ -8,6 +8,8 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { PasswordDialogModule } from '../password-dialog/password-dialog.component.module';
 
 @NgModule({
   declarations: [UrlInfoComponent],
@@ -17,9 +19,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ClipboardModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatIconModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    PasswordDialogModule
   ],
   exports: [
     UrlInfoComponent

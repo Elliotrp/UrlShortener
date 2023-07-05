@@ -22,8 +22,8 @@ export class ShortKeyGuard implements CanActivate, CanActivateChild {
       state: RouterStateSnapshot): Observable<boolean> {
       return this.urlService.getUrl(route.params['shortKey']).pipe(
         map(response => {
-          if (response.targetUrl) {
-            window.location.href = this.ensureProtocol(response.targetUrl);
+          if (response.ok && response.body && response.body.targetUrl) {
+            window.location.href = this.ensureProtocol(response.body.targetUrl);
           } else {
             this.router.navigate(['..']);
           }

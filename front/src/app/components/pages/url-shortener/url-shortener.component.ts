@@ -36,17 +36,24 @@ export class UrlShortenerComponent implements OnInit {
 
 		const requestBody: Url = { targetUrl: this.inputUrl };
 		this.urlService.createUrl(requestBody).subscribe((response) => {
-			this.shortenedUrls.push(new Url(response.id, `${window.location.origin}/${response.shortUrl}`, response.targetUrl));
-			this.localStorageService.setItem(environment.storageKeys.SHORTENED_URLS, this.shortenedUrls);
-			this.inputUrl = undefined;
+			if (response.body) {
+				const url: Url = response.body;
+				url.shortUrl = `${window.location.origin}/${url.shortUrl}`
+				this.shortenedUrls.push(url);
+				this.localStorageService.setItem(environment.storageKeys.SHORTENED_URLS, this.shortenedUrls);
+				this.inputUrl = undefined;
+			}
 		});
-		
-		// store result in session storage and display in a table component
-		// use external api to get 5 letter words so that it is memorable
 	}
 
-	public removeUrl(urlToRemove: Url): void {
-		this.shortenedUrls = this.shortenedUrls.filter(item => item.id !== urlToRemove.id);
+	public removeUrl(url: Url): void {
+		this.shortenedUrls = this.shortenedUrls.filter(item => item.id !== url.id);
+		this.localStorageService.setItem(environment.storageKeys.SHORTENED_URLS, this.shortenedUrls);
+	}
+
+	public passwordSet(url: Url): void {
+		const indexOfUrl = this.shortenedUrls.findIndex(item => item.id === url.id);
+    	this.shortenedUrls[indexOfUrl] = url;
 		this.localStorageService.setItem(environment.storageKeys.SHORTENED_URLS, this.shortenedUrls);
 	}
 }

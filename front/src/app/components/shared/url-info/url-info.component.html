@@ -13,8 +13,9 @@
             <button mat-icon-button ngxClipboard [cbContent]="url.shortUrl" aria-label="Copy to clipboard" matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
                <mat-icon>content_copy</mat-icon>
             </button>
-            <button mat-icon-button aria-label="Password protection" matTooltip="Add password protection">
-               <mat-icon>lock_open</mat-icon>
+            <button mat-icon-button aria-label="Password protection" matTooltip="Edit password protection" (click)="showPasswordDialog(url)">
+               <mat-icon *ngIf="url.password">lock</mat-icon>
+               <mat-icon *ngIf="!url.password">lock_open</mat-icon>
             </button>
             <button mat-icon-button aria-label="View usage" matTooltip="View usage">
                <mat-icon>assessment</mat-icon>
@@ -26,3 +27,5 @@
       </span>
    </li>
 </ul>
+
+<mat-dialog-content></mat-dialog-content>
