@@ -25,7 +25,7 @@ export class ShortKeyGuard implements CanActivate, CanActivateChild {
             return true;
          },
          error: (err) => {
-            this.router.navigate(['../not-found']);
+            this.router.navigate([shortKey, 'not-found']);
             throw err;
          }
       });

@@ -12,7 +12,7 @@ const routes: Routes = [
       component: UrlShortenerComponent
    },
    {
-      path: 'not-found',
+      path: ':shortKey/not-found',
       title: 'Page Not Found',
       component: NotFoundComponent
    },
