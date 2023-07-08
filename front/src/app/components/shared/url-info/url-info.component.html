@@ -16,8 +16,7 @@
             </button>
             <button mat-icon-button aria-label="Password protection" matTooltip="Edit password protection"
                (click)="showPasswordDialog(url)">
-               <mat-icon *ngIf="url.password">lock</mat-icon>
-               <mat-icon *ngIf="!url.password">lock_open</mat-icon>
+               <mat-icon>{{ url.password ? 'lock' : 'lock_open' }}</mat-icon>
             </button>
             <button mat-icon-button aria-label="View usage" matTooltip="View usage">
                <mat-icon>assessment</mat-icon>

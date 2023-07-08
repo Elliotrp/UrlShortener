@@ -1,24 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Url } from 'src/app/models/Url';
+import { Observable, of, tap } from 'rxjs';
+import { IUrl } from 'src/app/interfaces/url.interface';
+import { IUrlResponse } from 'src/app/interfaces/url-response.interface';
 import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UrlService {
-  constructor(private http: HttpClient) { }
+   public url: HttpResponse<IUrlResponse> | null = null;
 
-  public createUrl(url: Url): Observable<HttpResponse<Url>> {
-    return this.http.post<Url>(`${environment.apiUrl}/Url`, url, { observe: 'response' });
-  }
+   constructor(private http: HttpClient) { }
 
-  public getUrl(shortKey: Url): Observable<HttpResponse<Url>> {
-    return this.http.get<Url>(`${environment.apiUrl}/Url/${shortKey}`, { observe: 'response' });
-  }
+   public createUrl(url: IUrl): Observable<HttpResponse<IUrlResponse>> {
+      return this.http.post<IUrlResponse>(`${environment.apiUrl}/Url`, url, { observe: 'response' });
+   }
 
-  public setUrlPassword(url: Url, password?: string | null): Observable<HttpResponse<Url>> {
-    return this.http.patch<Url>(`${environment.apiUrl}/Url/${url.id}/password`, { password: password }, { observe: 'response' })
-  }
+   public getUrl(shortKey: string, password?: string): Observable<HttpResponse<IUrlResponse>> {
+      return this.url?.body?.shortUrl === shortKey ? of(this.url) : this.http.get<IUrlResponse>(`${environment.apiUrl}/Url/${shortKey}`,
+      { 
+         params: password ? { password: password} : {},
+         observe: 'response' 
+      }).pipe(
+         tap(response => {
+            if (!response?.body?.error) {
+               this.url = response;
+            }
+         })
+      );
+   }
+
+   public setUrlPassword(url: IUrl, password?: string | null): Observable<HttpResponse<IUrlResponse>> {
+      return this.http.patch<IUrlResponse>(`${environment.apiUrl}/Url/${url.id}/password`, { password: password }, { observe: 'response' })
+   }
 }

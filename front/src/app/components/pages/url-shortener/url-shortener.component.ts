@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { validateUrl } from 'src/app/functions/validate-url.function';
-import { Url } from 'src/app/models/Url';
+import { IUrl } from 'src/app/interfaces/url.interface';
 import { UrlService } from 'src/app/services/url/url.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
@@ -13,7 +13,7 @@ import { environment } from 'src/environment';
 })
 export class UrlShortenerComponent implements OnInit {
    public inputUrl: string | undefined;
-   public shortenedUrls: Url[] = [];
+   public shortenedUrls: IUrl[] = [];
 
    constructor(
       private readonly urlService: UrlService,
@@ -38,10 +38,10 @@ export class UrlShortenerComponent implements OnInit {
          return;
       }
 
-      const requestBody: Url = { targetUrl: this.inputUrl };
+      const requestBody: IUrl = { targetUrl: this.inputUrl };
       this.urlService.createUrl(requestBody).subscribe((response) => {
          if (response.body) {
-            const url: Url = response.body;
+            const url: IUrl = response.body;
             url.shortUrl = `${window.location.origin}/${url.shortUrl}`;
             this.shortenedUrls.push(url);
             this.localStorageService.setItem(
@@ -53,7 +53,7 @@ export class UrlShortenerComponent implements OnInit {
       });
    }
 
-   public removeUrl(url: Url): void {
+   public removeUrl(url: IUrl): void {
       this.shortenedUrls = this.shortenedUrls.filter(
          (item) => item.id !== url.id
       );
@@ -63,7 +63,7 @@ export class UrlShortenerComponent implements OnInit {
       );
    }
 
-   public passwordSet(url: Url): void {
+   public passwordSet(url: IUrl): void {
       const indexOfUrl = this.shortenedUrls.findIndex(
          (item) => item.id === url.id
       );

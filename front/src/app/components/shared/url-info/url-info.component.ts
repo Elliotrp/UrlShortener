@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Url } from 'src/app/models/Url';
+import { IUrl } from 'src/app/interfaces/url.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordDialogComponent } from '../password-dialog/password-dialog.component';
@@ -12,9 +12,9 @@ import { IPasswordDialogResult } from '../password-dialog/password-dialog-result
    styleUrls: ['./url-info.component.scss']
 })
 export class UrlInfoComponent {
-   @Input() public urls: Url[] = [];
-   @Output() public removeUrl: EventEmitter<Url> = new EventEmitter<Url>();
-   @Output() public passwordSet: EventEmitter<Url> = new EventEmitter<Url>();
+   @Input() public urls: IUrl[] = [];
+   @Output() public removeUrl: EventEmitter<IUrl> = new EventEmitter<IUrl>();
+   @Output() public passwordSet: EventEmitter<IUrl> = new EventEmitter<IUrl>();
 
    constructor(private readonly snackBar: MatSnackBar,
       private readonly dialog: MatDialog,
@@ -26,11 +26,11 @@ export class UrlInfoComponent {
       });
    }
 
-   public remove(url: Url): void {
+   public remove(url: IUrl): void {
       this.removeUrl.emit(url);
    }
 
-   public showPasswordDialog(url: Url): void {
+   public showPasswordDialog(url: IUrl): void {
       const dialogRef = this.dialog.open(PasswordDialogComponent, {
          width: '300px',
          data: url
@@ -40,14 +40,12 @@ export class UrlInfoComponent {
          if (result.submitted) {
             this.urlService.setUrlPassword(url, result.password).subscribe(
                response => {
-                  if (response.ok) {
-                     url.password = !!result.password;
-                     this.passwordSet.emit(url);
-                     const message: string = url.password ? 'Password saved!' : 'Password removed!';
-                     this.snackBar.open(message, '', {
-                        duration: 3000
-                     });
-                  }
+                  url.password = !!result.password;
+                  this.passwordSet.emit(url);
+                  const message: string = url.password ? 'Password saved!' : 'Password removed!';
+                  this.snackBar.open(message, '', {
+                     duration: 3000
+                  });
                }
             );
          }

@@ -20,7 +20,6 @@ public static class ResponseStatusHelper
          case ErrorCode.GetError:
             return controller.NotFound(response);
          case ErrorCode.InvalidPassword:
-            return controller.Unauthorized(response);
          default:
             return controller.Ok(response);
       }

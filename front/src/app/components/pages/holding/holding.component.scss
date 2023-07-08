@@ -1,0 +1,25 @@
+h2 {
+   font-size: x-large;
+   line-height: 30px;
+   font-weight: 500;
+   margin-bottom: 0;
+}
+
+:host {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 65vh;
+}
+
+mat-card {
+   max-width: 480px;
+   width: 100%;
+   margin: 0 10px;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 30px;
+   padding: 35px;
+}

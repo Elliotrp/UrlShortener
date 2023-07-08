@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Url } from 'src/app/models/Url';
+import { IUrl } from 'src/app/interfaces/url.interface';
 import { IPasswordDialogResult } from './password-dialog-result.interface';
 
 @Component({
@@ -12,7 +12,7 @@ export class PasswordDialogComponent {
    public showValidation: boolean = false;
 
    constructor(public dialogRef: MatDialogRef<PasswordDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public url: Url) { }
+      @Inject(MAT_DIALOG_DATA) public url: IUrl) { }
 
    public cancel(): void {
       const result: IPasswordDialogResult = { submitted: false };
