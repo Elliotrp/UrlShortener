@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { UrlService } from '../services/url/url.service';
 import { ErrorCode } from '../enums/error-code.enum';
 
 @Injectable({
    providedIn: 'root'
 })
-export class ShortKeyGuard implements CanActivate, CanActivateChild {
+export class ShortKeyGuard {
    constructor(private readonly urlService: UrlService,
       private readonly router: Router) { }
 
