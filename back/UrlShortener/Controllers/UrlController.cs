@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NpgsqlTypes;
 using UrlShortener.Dtos;
 using UrlShortener.Helpers;
 using UrlShortener.Services;
@@ -30,9 +31,31 @@ public class UrlController : ControllerBase
    }
 
    [HttpGet("{shortKey}")]
-   public async Task<IActionResult> Get(string shortKey, [FromQuery(Name = "password")] string password = null)
+   public async Task<IActionResult> Get(
+      string shortKey,
+      [FromQuery(Name = "password")] string password,
+      [FromQuery(Name = "browser")] string browser,
+      [FromQuery(Name = "deviceType")] string deviceType,
+      [FromQuery(Name = "operatingSystem")] string operatingSystem,
+      [FromQuery(Name = "latitude")] string latitude,
+      [FromQuery(Name = "longitude")] string longitude
+   )
    {
-      BaseUrlResponse response = await this.urlService.GetUrl(shortKey, password);
+      GetUrlRequest request = new GetUrlRequest
+      {
+         ShortKey = shortKey,
+         Password = password,
+         Browser = browser,
+         DeviceType = deviceType,
+         OperatingSystem = operatingSystem,
+      };
+
+      if (double.TryParse(latitude, out double lat) && double.TryParse(longitude, out double lon)) 
+      {
+         request.Location = new NpgsqlPoint(lat, lon);
+      }
+
+      BaseUrlResponse response = await this.urlService.GetUrl(request);
       return ResponseStatusHelper.GetStatusCode(this, response);
    }
 

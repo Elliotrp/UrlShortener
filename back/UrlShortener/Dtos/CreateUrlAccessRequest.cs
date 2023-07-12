@@ -1,19 +1,11 @@
-namespace UrlShortener.Models;
+﻿namespace UrlShortener.Dtos;
 
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using NpgsqlTypes;
+using UrlShortener.Models;
 
-[Table("UrlAccess")]
-public class UrlAccess
+public class CreateUrlAccessRequest
 {
-   public int Id { get; set; }
-
-   public int UrlId { get; set; }
-
    public Url Url { get; set; }
-
-   public DateTime AccessedDate { get; set; }
 
    public string Browser { get; set; }
 

@@ -4,6 +4,7 @@ using System;
 using UrlShortener.Models;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using UrlShortener.Dtos;
 
 public class UrlAccessService : IUrlAccessService
 {
@@ -17,12 +18,17 @@ public class UrlAccessService : IUrlAccessService
       this.context = context;
    }
 
-   public async Task CreateUrlAccess(Url url)
+   public async Task CreateUrlAccess(CreateUrlAccessRequest request)
    {
       UrlAccess newUrlAccess = new UrlAccess
       {
-         UrlId = url.Id,
-         AccessedDate = DateTime.UtcNow
+         UrlId = request.Url.Id,
+         AccessedDate = DateTime.UtcNow,
+         Browser = request.Browser,
+         DeviceType = request.DeviceType,
+         OperatingSystem = request.OperatingSystem,
+         Location = request.Location,
+         Authorised = request.Authorised
       };
       this.context.UrlAccesses.Add(newUrlAccess);
       await this.context.SaveChangesAsync();

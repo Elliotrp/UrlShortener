@@ -57,19 +57,28 @@ public class UrlService : IUrlService
       return response;
    }
 
-   public async Task<BaseUrlResponse> GetUrl(string shortKey, string password)
+   public async Task<BaseUrlResponse> GetUrl(GetUrlRequest request)
    {
       BaseUrlResponse response = new BaseUrlResponse();
 
       try
       {
-         Url url = await this.context.Urls.FirstOrDefaultAsync(u => u.ShortUrl == shortKey);
+         Url url = await this.context.Urls.FirstOrDefaultAsync(u => u.ShortUrl == request.ShortKey);
+         CreateUrlAccessRequest createAccessRequest = new CreateUrlAccessRequest
+         {
+            Url = url,
+            Browser = request.Browser,
+            DeviceType = request.DeviceType,
+            OperatingSystem = request.OperatingSystem,
+            Location = request.Location
+         };
+
          if (url is null)
          {
             Error error = new Error
             {
                ErrorCode = ErrorCode.UrlNotFound,
-               ErrorMessage = $"Url with {nameof(shortKey)} {shortKey} was not found"
+               ErrorMessage = $"Url with {nameof(request.ShortKey)} {request.ShortKey} was not found"
             };
             this.logger.LogError(error.ErrorCode.ToString(), error.ErrorMessage);
             response.Error = error;
@@ -78,8 +87,8 @@ public class UrlService : IUrlService
          else
          {
             if (!string.IsNullOrEmpty(url.Password) &&
-               (string.IsNullOrEmpty(password) ||
-               !BCrypt.Verify(password, url.Password)))
+               (string.IsNullOrEmpty(request.Password) ||
+               !BCrypt.Verify(request.Password, url.Password)))
             {
                Error error = new Error
                {
@@ -88,11 +97,13 @@ public class UrlService : IUrlService
                };
                this.logger.LogError(error.ErrorCode.ToString(), error.ErrorMessage);
                response.Error = error;
-               return response;
+               createAccessRequest.Authorised = false;
+            } else {
+               response = new BaseUrlResponse(url);
+               createAccessRequest.Authorised = true;
             }
-
-            response = new BaseUrlResponse(url);
-            await this.urlAccessService.CreateUrlAccess(url);
+            
+            await this.urlAccessService.CreateUrlAccess(createAccessRequest);
          }
       }
       catch (Exception ex)
