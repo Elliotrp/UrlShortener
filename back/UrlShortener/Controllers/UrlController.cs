@@ -38,7 +38,8 @@ public class UrlController : ControllerBase
       [FromQuery(Name = "deviceType")] string deviceType,
       [FromQuery(Name = "operatingSystem")] string operatingSystem,
       [FromQuery(Name = "latitude")] string latitude,
-      [FromQuery(Name = "longitude")] string longitude
+      [FromQuery(Name = "longitude")] string longitude,
+      [FromQuery(Name = "country")] string country
    )
    {
       GetUrlRequest request = new GetUrlRequest
@@ -48,6 +49,7 @@ public class UrlController : ControllerBase
          Browser = browser,
          DeviceType = deviceType,
          OperatingSystem = operatingSystem,
+         Country = country
       };
 
       if (double.TryParse(latitude, out double lat) && double.TryParse(longitude, out double lon)) 

@@ -28,7 +28,8 @@ public class UrlAccessService : IUrlAccessService
          DeviceType = request.DeviceType,
          OperatingSystem = request.OperatingSystem,
          Location = request.Location,
-         Authorised = request.Authorised
+         Authorised = request.Authorised,
+         Country = request.Country
       };
       this.context.UrlAccesses.Add(newUrlAccess);
       await this.context.SaveChangesAsync();

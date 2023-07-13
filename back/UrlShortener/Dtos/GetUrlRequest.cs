@@ -15,4 +15,6 @@ public class GetUrlRequest
    public string OperatingSystem { get; set; }
    
    public NpgsqlPoint Location { get; set; }
+
+   public string Country { get; set; }
 }
