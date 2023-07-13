@@ -24,6 +24,7 @@ const routes: Routes = [
    {
       path: ':shortKey',
       canActivate: [ShortKeyGuard],
+      title: 'Redirecting...',
       component: HoldingComponent
    }
 ];
