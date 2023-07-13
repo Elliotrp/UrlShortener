@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS public."UrlAccess"
     "OperatingSystem" text COLLATE pg_catalog."default",
     "Location" point,
     "Authorised" boolean,
+    "Country" text COLLATE pg_catalog."default",
     CONSTRAINT "UrlAccess_pkey" PRIMARY KEY ("Id"),
     CONSTRAINT "Foreign_UrlAccess_UrlId" FOREIGN KEY ("UrlId")
         REFERENCES public."Url" ("Id") MATCH SIMPLE
