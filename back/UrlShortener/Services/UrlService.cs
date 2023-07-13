@@ -70,7 +70,8 @@ public class UrlService : IUrlService
             Browser = request.Browser,
             DeviceType = request.DeviceType,
             OperatingSystem = request.OperatingSystem,
-            Location = request.Location
+            Location = request.Location,
+            Country = request.Country
          };
 
          if (url is null)
@@ -102,7 +103,7 @@ public class UrlService : IUrlService
                response = new BaseUrlResponse(url);
                createAccessRequest.Authorised = true;
             }
-            
+
             await this.urlAccessService.CreateUrlAccess(createAccessRequest);
          }
       }

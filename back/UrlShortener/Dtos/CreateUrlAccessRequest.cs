@@ -16,4 +16,6 @@ public class CreateUrlAccessRequest
    public NpgsqlPoint Location { get; set; }
 
    public bool Authorised { get; set; }
+
+   public string Country { get; set; }
 }

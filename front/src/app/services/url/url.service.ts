@@ -15,6 +15,7 @@ import { ILocation } from 'src/app/interfaces/location.interface';
 })
 export class UrlService {
    public url: HttpResponse<IUrlResponse> | null = null;
+   private deviceInfo: any;
 
    constructor(private http: HttpClient,
       private readonly locationService: LocationService,
@@ -52,7 +53,7 @@ export class UrlService {
          map((location: ILocation) => {
             const deviceInfo: IDeviceInfo = this.deviceService.getDeviceInfo();
             const query: IGetRequestQuery = {
-               ...password && { password : password },
+               ...(password && { password : password }),
                ...location,
                ...deviceInfo
             };
