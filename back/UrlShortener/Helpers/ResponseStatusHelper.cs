@@ -5,7 +5,7 @@ using UrlShortener.Dtos;
 
 public static class ResponseStatusHelper
 {
-   public static IActionResult GetStatusCode(ControllerBase controller, BaseUrlResponse response)
+   public static IActionResult GetStatusCode(ControllerBase controller, IBaseResponse response)
    {
       if (response.Error is null)
       {

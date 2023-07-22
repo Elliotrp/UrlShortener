@@ -11,8 +11,6 @@ public class UrlAccess
 
    public int UrlId { get; set; }
 
-   public Url Url { get; set; }
-
    public DateTime AccessedDate { get; set; }
 
    public string Browser { get; set; }
