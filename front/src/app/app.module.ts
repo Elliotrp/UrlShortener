@@ -6,6 +6,7 @@ import { UrlShortenerModule } from './components/pages/url-shortener/url-shorten
 import { HoldingModule } from './components/pages/holding/holding.component.module';
 import { NotFoundModule } from './components/pages/not-found/not-found.module';
 import { EnterPasswordModule } from './components/pages/enter-password/enter-password.module';
+import { AnalyticsModule } from './components/pages/analytics/analytics.module';
 
 @NgModule({
    declarations: [
@@ -17,7 +18,8 @@ import { EnterPasswordModule } from './components/pages/enter-password/enter-pas
       UrlShortenerModule,
       HoldingModule,
       NotFoundModule,
-      EnterPasswordModule
+      EnterPasswordModule,
+      AnalyticsModule
    ],
    providers: [],
    bootstrap: [AppComponent]

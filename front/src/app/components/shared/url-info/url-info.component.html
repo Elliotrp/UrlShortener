@@ -18,9 +18,9 @@
                (click)="showPasswordDialog(url)">
                <mat-icon>{{ url.password ? 'lock' : 'lock_open' }}</mat-icon>
             </button>
-            <button mat-icon-button aria-label="View usage" matTooltip="View usage">
+            <a mat-icon-button aria-label="View usage" matTooltip="View usage" href="{{url.shortUrl}}/usage" target="_blank">
                <mat-icon>assessment</mat-icon>
-            </button>
+            </a>
             <button mat-icon-button aria-label="Remove" matTooltip="Remove" (click)="remove(url)">
                <mat-icon>delete_forever</mat-icon>
             </button>
