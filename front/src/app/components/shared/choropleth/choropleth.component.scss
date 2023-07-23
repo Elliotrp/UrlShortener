@@ -1,6 +1,28 @@
 .countries {
-   fill: white;
+   fill: lightgrey;
    stroke: #000;
    stroke-linejoin: round;
    stroke-width: 0.25px;
+}
+
+.has-clicks {
+   cursor: pointer;
+}
+
+.selected {
+   stroke-width: 1px;
+   transition: stroke-width 200ms linear;
+}
+
+.translucent {
+   opacity: 0.7;
+   transition: opacity 300ms linear;
+   backface-visibility: hidden;
+   transform: translateZ(0);
+   -webkit-font-smoothing: subpixel-antialiased;
+}
+
+path {
+   opacity: 1;
+   transition: opacity 100ms linear;
 }
