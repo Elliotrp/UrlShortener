@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChoroplethDataMap } from '../../shared/choropleth/choropleth-data.class';
 
 @Component({
   selector: 'app-analytics',
@@ -6,12 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
-   public choroplethData: Map<string, number> = new Map<string, number>();
+   public choroplethData: ChoroplethDataMap = new ChoroplethDataMap();
    
    public ngOnInit(): void {
-      const testData = [{ id: '156', clicks: 10 }, { id: '840', clicks: 4}, { id: '826', clicks: 3}, { id: '032', clicks: 1}, { id: '180', clicks: 2}];
-      testData.forEach(d => {
-         this.choroplethData.set(d.id, d.clicks)
+      const testData = [{ id: '156', count: 10 }, { id: '840', count: 4}, { id: '826', count: 3}, { id: '032', count: 1}, { id: '180', count: 2}, { id: '124', count: 7}];
+      testData.forEach((d: any) => {
+         this.choroplethData.set(d.id, { count: 1, relativeCount: d.count })
       });
    }
 }

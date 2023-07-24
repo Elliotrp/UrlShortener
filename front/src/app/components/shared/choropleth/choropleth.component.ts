@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
-import { feature } from 'topojson-client';
-import { WorldAtlas, mesh } from 'topojson';
+import { feature, mesh } from 'topojson-client';
+import { WorldAtlas } from 'topojson';
+import { ChoroplethDataMap } from './choropleth-data.class';
+import { Feature } from 'geojson';
 
 @Component({
   selector: 'app-choropleth',
@@ -10,12 +12,17 @@ import { WorldAtlas, mesh } from 'topojson';
   encapsulation: ViewEncapsulation.None,
 })
 export class ChoroplethComponent implements OnInit {
-   @Input() public data: Map<string, number> = new Map<string, number>();
+   @Input() public data: ChoroplethDataMap = new ChoroplethDataMap();
 
-   private svg: any;
-   private path: any;
-   private colour: any;
+   private svg: d3.Selection<SVGElement, any, HTMLElement, any> | undefined;
+   private path: d3.GeoPath | undefined;
+   private colour: d3.ScaleThreshold<number, string>;
 
+   constructor() {
+      this.svg = d3.select("svg");
+      this.colour = d3.scaleThreshold<number, string>().domain(d3.range(2, 10)).range(d3.schemeBlues[9]);
+      d3.json<WorldAtlas>('/assets/countries-110m.json').then(this.create);
+   }
    ngOnInit(): void {
       this.svg = d3.select("svg");
       this.colour = d3.scaleThreshold<number, string>().domain(d3.range(2, 10)).range(d3.schemeBlues[9]);
@@ -25,40 +32,48 @@ export class ChoroplethComponent implements OnInit {
    private create = (countries: WorldAtlas | undefined): void => {
       if (countries) {
          this.path = d3.geoPath(d3.geoMercator().fitWidth(800, mesh(countries, countries.objects.land)).translate([400, 250]));
-         this.svg
-            .append('g')
-            .attr('class', 'countries')
-            .selectAll('path')
-            .data(feature(countries, countries.objects.countries).features)
-            .enter()
-            .append('path')
-            .attr('fill', (d: any) => this.colour((d.clicks = this.data.get(d.id))))
-            .attr('d', this.path)
-            .attr('class', (d: any) => this.data.get(d.id) ? 'has-clicks' : null)
-            .on('click', (d: PointerEvent, i: any) => this.showMessage(i))
-            .on('mouseover', (d: MouseEvent, i: any) => this.mouseOver(d, i))
-            .on('mouseleave', (d: MouseEvent, i: any) => this.mouseLeave(d, i))
+         if (this.svg) {
+            this.svg
+               .append('g')
+               .classed('countries', true)
+               .selectAll('path')
+               .data(feature(countries, countries.objects.countries).features)
+               .enter()
+               .append('path')
+               .attr('fill', (d: Feature) => this.colour((this.data.getItemById(d.id)?.relativeCount ?? 0)))
+               .attr('d', this.path)
+               .classed('has-count', (d: Feature) => !!this.data.getItemById(d.id)?.count)
+               .on('click', (d: PointerEvent, i: Feature) => this.showMessage(i))
+               .on('mouseover', (d: MouseEvent, i: Feature) => this.mouseOver(d, i))
+               .on('mouseleave', (d: MouseEvent, i: Feature) => this.mouseLeave(d, i));
+         }
       }
    }
 
-   private mouseOver = (d: MouseEvent, country: any): void => {
-      if (country.clicks) {
+   private mouseOver = (d: MouseEvent, country: Feature): void => {
+      if (this.data.getItemById(country.id)?.count) {
          d3.selectAll('path').classed('translucent', true)
          d3.select(d.target as HTMLElement)
             .classed('translucent', false)
-            .classed('selected', true)
+            .classed('selected', true);
       }
    }
 
-   private mouseLeave = (d: MouseEvent, country: any): void => {
+   private mouseLeave = (d: MouseEvent, country: Feature): void => {
       d3.selectAll('path').classed('translucent', false)
       d3.select(d.target as HTMLElement)
          .classed('selected', false)
    }
    
-   private showMessage = (country: any): void => {
-      if (country.clicks) {
-         window.alert(country.properties.name + ' has ' + country.clicks + ' clicks.');
+   private showMessage = (country: Feature): void => {
+      const count = this.data.getItemById(country.id)?.count;
+      if (count) {
+         window.alert(country.properties?.['name'] + ' has ' + count + ' clicks.');
       }
    }
+
+   //TODO
+   // mock realistic data and adjust DONE
+   // put in tab component
+   // rename clicks to count and have relative count, keep this component generic
 }
