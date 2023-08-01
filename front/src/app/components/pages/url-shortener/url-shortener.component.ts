@@ -43,7 +43,7 @@ export class UrlShortenerComponent implements OnInit {
          if (response.body) {
             const url: IUrl = response.body;
             url.shortUrl = `${window.location.origin}/${url.shortUrl}`;
-            this.shortenedUrls.push(url);
+            this.shortenedUrls.unshift(url);
             this.localStorageService.setItem(
                environment.storageKeys.SHORTENED_URLS,
                this.shortenedUrls

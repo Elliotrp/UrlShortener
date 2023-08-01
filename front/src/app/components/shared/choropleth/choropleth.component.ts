@@ -40,7 +40,7 @@ export class ChoroplethComponent implements OnInit {
                .data(feature(countries, countries.objects.countries).features)
                .enter()
                .append('path')
-               .attr('fill', (d: Feature) => this.colour((this.data.getItemById(d.id)?.relativeCount ?? 0)))
+               .attr('fill', (d: Feature) => this.getFillColour(d))
                .attr('d', this.path)
                .classed('has-count', (d: Feature) => !!this.data.getItemById(d.id)?.count)
                .on('click', (d: PointerEvent, i: Feature) => this.showMessage(i))
@@ -48,6 +48,11 @@ export class ChoroplethComponent implements OnInit {
                .on('mouseleave', (d: MouseEvent, i: Feature) => this.mouseLeave(d, i));
          }
       }
+   }
+
+   private getFillColour(feature: Feature): string | null {
+      const relativeCount = this.data.getItemById(feature.id)?.relativeCount;
+      return relativeCount ? this.colour(relativeCount) : null;
    }
 
    private mouseOver = (d: MouseEvent, country: Feature): void => {

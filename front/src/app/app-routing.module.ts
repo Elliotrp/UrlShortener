@@ -5,7 +5,6 @@ import { ShortKeyGuard } from './guards/short-key.guard';
 import { HoldingComponent } from './components/pages/holding/holding.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { EnterPasswordComponent } from './components/pages/enter-password/enter-password.component';
-import { AnalyticsComponent } from './components/pages/analytics/analytics.component';
 
 const routes: Routes = [
    {
@@ -25,7 +24,7 @@ const routes: Routes = [
    {
       path: ':shortKey/usage',
       title: 'Url Usage',
-      component: AnalyticsComponent
+      loadChildren: () => import('./components/pages/analytics/analytics.module').then(m => m.AnalyticsModule)
    },
    {
       path: ':shortKey',

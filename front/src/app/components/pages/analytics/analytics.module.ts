@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AnalyticsComponent } from './analytics.component';
-import { ChoroplethModule } from '../../shared/choropleth/choropleth.module';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
+import { routes } from './analytics-routing.module';
+import { GeographicChartsModule } from './geographic-charts/geographic-charts.module';
 
 @NgModule({
    declarations: [AnalyticsComponent],
    exports: [AnalyticsComponent],
    imports: [
       CommonModule,
-      ChoroplethModule
+      GeographicChartsModule,
+      MatTabsModule,
+      RouterModule.forChild([routes])
    ]
 })
 export class AnalyticsModule { }
