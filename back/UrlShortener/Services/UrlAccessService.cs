@@ -16,18 +16,14 @@ public class UrlAccessService : IUrlAccessService
    private readonly UrlShortenerDbContext context;
 
    public UrlAccessService(
-      IUrlAccessConverter urlAccessConverter,
       ILogger<IUrlAccessService> logger,
+      IUrlAccessConverter urlAccessConverter,
       UrlShortenerDbContext context)
    {
       this.urlAccessConverter = urlAccessConverter;
       this.logger = logger;
       this.context = context;
    }
-
-   // for getting the url accesses, separate methods and endpoints for each entity that take the url id in the path
-
-   // fe usage page gets the url information from the short url on page load, then the page will have the id to send to the url access endpoints
 
    public async Task CreateAllUrlAccess(CreateAllUrlAccessRequest request)
    {
