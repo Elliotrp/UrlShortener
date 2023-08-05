@@ -9,7 +9,7 @@ using UrlShortener.Models;
 using UrlShortener.Services;
 
 [ApiController]
-[Route("url/{id}/urlAccess")]
+[Route("url/{id}/[controller]")]
 public class UrlAccessController : ControllerBase
 {
    private readonly ILogger<UrlAccessController> logger;
