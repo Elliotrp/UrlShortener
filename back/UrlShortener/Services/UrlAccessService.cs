@@ -11,14 +11,14 @@ using System.Linq.Expressions;
 
 public class UrlAccessService : IUrlAccessService
 {
-   private readonly IUrlAccessConverter urlAccessConverter;
    private readonly ILogger<IUrlAccessService> logger;
    private readonly UrlShortenerDbContext context;
+   private readonly IUrlAccessConverter urlAccessConverter;
 
    public UrlAccessService(
       ILogger<IUrlAccessService> logger,
-      IUrlAccessConverter urlAccessConverter,
-      UrlShortenerDbContext context)
+      UrlShortenerDbContext context,
+      IUrlAccessConverter urlAccessConverter)
    {
       this.urlAccessConverter = urlAccessConverter;
       this.logger = logger;
