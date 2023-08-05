@@ -2,10 +2,13 @@
 
 using System.Threading.Tasks;
 using UrlShortener.Dtos;
+using UrlShortener.Models;
 
 public interface IUrlAccessService
 {
-   public Task CreateUrlAccess(CreateUrlAccessRequest url);
+   public Task CreateAllUrlAccess(CreateAllUrlAccessRequest request);
 
-   public Task<UrlAccessesResponse> GetUrlAccessesByUrl(GetUrlAccessesByUrlRequest request);
+   public Task<BaseListUrlAccessResponse<TUrlAccess>> ListUrlAccess<TUrlAccess>(int urlId) where TUrlAccess : BaseUrlAccess;
+
+   public Task<GetUrlAccessCountResponse> GetUrlAccessCount(int urlId);
 }

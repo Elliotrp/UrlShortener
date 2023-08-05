@@ -1,8 +1,9 @@
 ﻿namespace UrlShortener.Dtos;
 
+using System;
 using UrlShortener.Models;
 
-public class BaseUrlResponse : Url, IBaseResponse
+public class BaseUrlResponse : BaseResponse
 {
    public BaseUrlResponse() { }
    
@@ -14,5 +15,11 @@ public class BaseUrlResponse : Url, IBaseResponse
       this.CreatedDate = url.CreatedDate;
    }
 
-   public Error Error { get; set; }
+   public int Id { get; set; }
+
+   public string ShortUrl { get; set; }
+
+   public string TargetUrl { get; set; }
+
+   public DateTime CreatedDate { get; set; }
 }

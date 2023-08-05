@@ -15,7 +15,6 @@ import { ILocation } from 'src/app/interfaces/location.interface';
 })
 export class UrlService {
    public url: HttpResponse<IUrlResponse> | null = null;
-   private deviceInfo: any;
 
    constructor(private http: HttpClient,
       private readonly locationService: LocationService,
@@ -55,7 +54,8 @@ export class UrlService {
             const query: IGetRequestQuery = {
                ...(password && { password : password }),
                ...location,
-               ...deviceInfo
+               ...deviceInfo,
+               dateTime: new Date().toLocaleString()
             };
             return query;
          })

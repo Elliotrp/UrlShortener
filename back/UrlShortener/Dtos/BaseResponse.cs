@@ -1,6 +1,6 @@
 ﻿namespace UrlShortener.Dtos;
 
-public interface IBaseResponse
+public class BaseResponse
 {
    public Error Error { get; set; }
 }

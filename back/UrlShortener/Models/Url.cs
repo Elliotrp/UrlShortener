@@ -16,7 +16,4 @@ public class Url
    public DateTime CreatedDate { get; set; }
 
    public string Password { get; set; }
-
-   public ICollection<UrlAccess> UrlAccesses { get; set; }
 }
-

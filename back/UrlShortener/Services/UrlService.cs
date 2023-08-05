@@ -64,14 +64,14 @@ public class UrlService : IUrlService
       try
       {
          Url url = await this.context.Urls.FirstOrDefaultAsync(u => u.ShortUrl == request.ShortKey);
-         CreateUrlAccessRequest createAccessRequest = new CreateUrlAccessRequest
+         CreateAllUrlAccessRequest createAllAccessRequest = new CreateAllUrlAccessRequest
          {
             Url = url,
             Browser = request.Browser,
-            DeviceType = request.DeviceType,
+            Device = request.Device,
             OperatingSystem = request.OperatingSystem,
-            Location = request.Location,
-            Country = request.Country
+            CountryCode = request.CountryCode,
+            DateTime = request.DateTime
          };
 
          if (url is null)
@@ -98,13 +98,13 @@ public class UrlService : IUrlService
                };
                this.logger.LogError(error.ErrorCode.ToString(), error.ErrorMessage);
                response.Error = error;
-               createAccessRequest.Authorised = false;
+               createAllAccessRequest.Authorised = false;
             } else {
                response = new BaseUrlResponse(url);
-               createAccessRequest.Authorised = true;
+               createAllAccessRequest.Authorised = true;
             }
 
-            await this.urlAccessService.CreateUrlAccess(createAccessRequest);
+            await this.urlAccessService.CreateAllUrlAccess(createAllAccessRequest);
          }
       }
       catch (Exception ex)

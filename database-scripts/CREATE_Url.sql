@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public."Url"
 (
-    "Id" bigint NOT NULL DEFAULT nextval('"Url_UrlId_seq"'::regclass),
+    "Id" bigint NOT NULL DEFAULT nextval('"Url_Id_seq"'::regclass),
     "ShortUrl" text COLLATE pg_catalog."default" NOT NULL,
     "CreatedDate" timestamp without time zone NOT NULL,
     "TargetUrl" text COLLATE pg_catalog."default" NOT NULL,

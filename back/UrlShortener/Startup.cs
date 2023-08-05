@@ -35,6 +35,7 @@ public class Startup
 
       services.AddScoped<IUrlService, UrlService>();
       services.AddScoped<IUrlAccessService, UrlAccessService>();
+      services.AddScoped<IUrlAccessConverter, UrlAccessConverter>();
 
       services.AddCors();
    }

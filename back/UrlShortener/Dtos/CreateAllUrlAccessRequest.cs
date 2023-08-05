@@ -1,12 +1,11 @@
-namespace UrlShortener.Dtos;
+﻿namespace UrlShortener.Dtos;
 
 using System;
+using UrlShortener.Models;
 
-public class GetUrlRequest
+public class CreateAllUrlAccessRequest
 {
-   public string ShortKey { get; set; }
-
-   public string Password { get; set; }
+   public Url Url { get; set; }
 
    public string Browser { get; set; }
 
@@ -17,4 +16,6 @@ public class GetUrlRequest
    public string CountryCode { get; set; }
 
    public DateTime DateTime { get; set; }
+
+   public bool Authorised { get; set; }
 }

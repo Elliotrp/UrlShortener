@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NpgsqlTypes;
+using System;
 using UrlShortener.Dtos;
 using UrlShortener.Helpers;
 using UrlShortener.Services;
@@ -37,9 +37,8 @@ public class UrlController : ControllerBase
       [FromQuery(Name = "browser")] string browser,
       [FromQuery(Name = "deviceType")] string deviceType,
       [FromQuery(Name = "operatingSystem")] string operatingSystem,
-      [FromQuery(Name = "latitude")] string latitude,
-      [FromQuery(Name = "longitude")] string longitude,
-      [FromQuery(Name = "country")] string country
+      [FromQuery(Name = "countryCode")] string countryCode,
+      [FromQuery(Name = "dateTime")] string dateString
    )
    {
       GetUrlRequest request = new GetUrlRequest
@@ -47,14 +46,14 @@ public class UrlController : ControllerBase
          ShortKey = shortKey,
          Password = password,
          Browser = browser,
-         DeviceType = deviceType,
+         Device = deviceType,
          OperatingSystem = operatingSystem,
-         Country = country
+         CountryCode = countryCode
       };
 
-      if (double.TryParse(latitude, out double lat) && double.TryParse(longitude, out double lon)) 
+      if (DateTime.TryParse(dateString, out DateTime dateTime))
       {
-         request.Location = new NpgsqlPoint(lat, lon);
+         request.DateTime = dateTime;
       }
 
       BaseUrlResponse response = await this.urlService.GetUrl(request);

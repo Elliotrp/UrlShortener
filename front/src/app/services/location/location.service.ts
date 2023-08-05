@@ -16,9 +16,7 @@ export class LocationService {
       return this.location ? of(this.location) : this.http.get<any>(this.apiUrl).pipe(
          map((locationData) => {
             this.location = {
-               latitude: locationData.latitude,
-               longitude: locationData.longitude,
-               country: locationData.country_name
+               countryCode: locationData.country_code_iso3
             }; 
             return this.location;
          })

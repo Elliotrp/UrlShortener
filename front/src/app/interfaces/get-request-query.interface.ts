@@ -4,7 +4,6 @@ export interface IGetRequestQuery {
    browser?: string;
    deviceType?: string;
    operatingSystem?: string;
-   latitude?: number;
-   longitude?: number;
-   country?: string;
+   countryCode?: string;
+   dateTime?: string;
 }
