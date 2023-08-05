@@ -147,6 +147,11 @@ public class UrlAccessService : IUrlAccessService
          else
          {
             urlAccess = convertRequest(request);
+            if (urlAccess == null)
+            {
+               this.logger.LogError($"No details were provided for {typeof(TUrlAccess)}");
+               return;
+            }
             urlAccess.Count = 1;
             context.Set<TUrlAccess>().Add(urlAccess);
          }
