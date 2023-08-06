@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from 'ngx-clipboard';
-import { DialogModule } from '../dialog/dialog.component.module';
+import { DialogModule } from '../dialog/dialog.module';
 
 @NgModule({
    declarations: [UrlInfoComponent],

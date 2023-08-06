@@ -41,4 +41,5 @@
        "name": "Launch Backend and Frontend",
        "configurations": ["Backend", "Serve Angular App", "Frontend"]
      }
+   ]
 }

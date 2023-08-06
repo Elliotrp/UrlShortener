@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UrlInfoListComponent } from './url-info-list.component';
 import { MatCardModule } from '@angular/material/card';
-import { UrlInfoModule } from '../url-info/url-info-component.module';
+import { UrlInfoModule } from '../url-info/url-info.module';
 
 @NgModule({
    declarations: [UrlInfoListComponent],

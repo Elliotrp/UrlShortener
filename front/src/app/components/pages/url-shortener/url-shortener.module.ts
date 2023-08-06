@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { UrlShortenerComponent } from './url-shortener.component';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UrlInfoListModule } from '../../shared/url-info-list/url-info-list.component.module';
+import { UrlInfoListModule } from '../../shared/url-info-list/url-info-list.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({

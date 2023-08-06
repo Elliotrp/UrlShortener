@@ -10,8 +10,8 @@ import { UrlLocalStorageService } from 'src/app/services/url-local-storage/url-l
 })
 export class UsageComponent {
    public url: IUrl | undefined;
-   public links: IUsagePaths[] = usagePaths;
-   public activeLink = this.links[0].path;
+   public links: IUsageTabs[] = usagePaths;
+   public activeLink: string;
 
    constructor(private readonly urlLocalStorageService: UrlLocalStorageService,
       route: ActivatedRoute,
@@ -22,15 +22,16 @@ export class UsageComponent {
       if (!this.url) {
          router.navigate(['']);
       }
+      this.activeLink = this.links.find(l => router.url.includes(l.path))?.path ?? this.links[0].path;
    }
 }
 
-interface IUsagePaths {
+interface IUsageTabs {
    name: string;
    path: string
 }
 
-const usagePaths: IUsagePaths[] = [
+const usagePaths: IUsageTabs[] = [
    {
       name: 'When',
       path: 'when'
