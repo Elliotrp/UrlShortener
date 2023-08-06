@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HoldingComponent } from './holding.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
@@ -14,8 +12,6 @@ import { MatCardModule } from '@angular/material/card';
 		HoldingComponent
    ],
    imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
 		CommonModule,
 		MatProgressSpinnerModule,
       MatCardModule

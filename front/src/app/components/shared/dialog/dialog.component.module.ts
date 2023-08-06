@@ -19,4 +19,4 @@ import { FormsModule } from '@angular/forms';
       FormsModule
    ]
 })
-export class DialogComponentModule { }
+export class DialogModule { }

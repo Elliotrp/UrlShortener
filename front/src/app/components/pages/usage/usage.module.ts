@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AnalyticsComponent } from './analytics.component';
+import { UsageComponent } from './usage.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
-import { routes } from './analytics-routing.module';
+import { routes } from './usage-routing.module';
 import { GeographicChartsModule } from './geographic-charts/geographic-charts.module';
+import { UrlInfoModule } from '../../shared/url-info/url-info-component.module';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-   declarations: [AnalyticsComponent],
-   exports: [AnalyticsComponent],
+   declarations: [UsageComponent],
+   exports: [UsageComponent],
    imports: [
       CommonModule,
       GeographicChartsModule,
+      MatCardModule,
       MatTabsModule,
+      UrlInfoModule,
       RouterModule.forChild([routes])
    ]
 })
-export class AnalyticsModule { }
+export class UsageModule { }

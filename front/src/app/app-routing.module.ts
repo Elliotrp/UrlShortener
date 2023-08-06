@@ -24,7 +24,7 @@ const routes: Routes = [
    {
       path: ':shortKey/usage',
       title: 'Url Usage',
-      loadChildren: () => import('./components/pages/analytics/analytics.module').then(m => m.AnalyticsModule)
+      loadChildren: () => import('./components/pages/usage/usage.module').then(m => m.UsageModule)
    },
    {
       path: ':shortKey',

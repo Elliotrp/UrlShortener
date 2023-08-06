@@ -6,22 +6,25 @@ import { UrlShortenerModule } from './components/pages/url-shortener/url-shorten
 import { HoldingModule } from './components/pages/holding/holding.component.module';
 import { NotFoundModule } from './components/pages/not-found/not-found.module';
 import { EnterPasswordModule } from './components/pages/enter-password/enter-password.module';
-import { AnalyticsModule } from './components/pages/analytics/analytics.module';
+import { UsageModule } from './components/pages/usage/usage.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
    declarations: [
       AppComponent
    ],
    imports: [
+      BrowserAnimationsModule,
       BrowserModule,
       AppRoutingModule,
       UrlShortenerModule,
       HoldingModule,
+      HttpClientModule,
       NotFoundModule,
       EnterPasswordModule,
-      AnalyticsModule
+      UsageModule
    ],
-   providers: [],
    bootstrap: [AppComponent]
 })
 export class AppModule { }

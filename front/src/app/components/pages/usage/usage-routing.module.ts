@@ -1,27 +1,28 @@
 import { Route } from '@angular/router';
-import { AnalyticsComponent } from './analytics.component';
+import { UsageComponent } from './usage.component';
 import { GeographicChartsComponent } from './geographic-charts/geographic-charts.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
 
 export const routes: Route = 
 {
    path: '',
-   component: AnalyticsComponent,
+   component: UsageComponent,
    children: [
       {
          path: '',
+         redirectTo: 'when',
+         pathMatch: 'full'
+      },
+      {
+         path: 'when',
          component: NotFoundComponent
       },
       {
-         path: 'When',
-         component: NotFoundComponent
-      },
-      {
-         path: 'Where',
+         path: 'where',
          component: GeographicChartsComponent
       },
       {
-         path: 'How',
+         path: 'how',
          component: NotFoundComponent
       }
    ]

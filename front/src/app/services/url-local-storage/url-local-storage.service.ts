@@ -13,6 +13,10 @@ export class UrlLocalStorageService {
       this.initialise();
    }
 
+   public getUrl(shortUrl: string): IUrl | undefined {
+      return this.shortenedUrls.find(u => u.shortUrl?.endsWith(shortUrl));
+   }
+
    public addUrl(url: IUrl): void {
       this.shortenedUrls.unshift(url);
       this.saveUrlsToLocalStorage();

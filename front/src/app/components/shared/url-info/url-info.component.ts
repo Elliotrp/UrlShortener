@@ -14,6 +14,7 @@ import { UrlLocalStorageService } from 'src/app/services/url-local-storage/url-l
 })
 export class UrlInfoComponent {
    @Input() public url: IUrl | undefined;
+   @Input() public showActionButtons = false;
 
    constructor(
       public readonly urlLocalStorageService: UrlLocalStorageService,      

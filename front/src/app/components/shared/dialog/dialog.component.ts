@@ -4,8 +4,7 @@ import { IPasswordDialogResult } from './dialog-result.interface';
 import { IDialogData } from './dialog-data.interface';
 
 @Component({
-   selector: 'app-password-dialog',
-   templateUrl: './password-dialog.component.html'
+   templateUrl: './dialog.component.html'
 })
 export class DialogComponent {
    public inputText: string | null = null;

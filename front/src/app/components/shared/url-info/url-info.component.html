@@ -12,16 +12,18 @@
          matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
          <mat-icon>content_copy</mat-icon>
       </button>
-      <button mat-icon-button aria-label="Password protection" matTooltip="Edit password protection"
-         (click)="showPasswordDialog(url)">
-         <mat-icon>{{ url.password ? 'lock' : 'lock_open' }}</mat-icon>
-      </button>
-      <a mat-icon-button aria-label="View usage" matTooltip="View usage" href="{{url.shortUrl}}/usage" target="_blank">
-         <mat-icon>assessment</mat-icon>
-      </a>
-      <button mat-icon-button aria-label="Remove" matTooltip="Remove" (click)="remove(url)">
-         <mat-icon>delete_forever</mat-icon>
-      </button>
+      <ng-container *ngIf="showActionButtons">
+         <button mat-icon-button aria-label="Password protection" matTooltip="Edit password protection"
+            (click)="showPasswordDialog(url)">
+            <mat-icon>{{ url.password ? 'lock' : 'lock_open' }}</mat-icon>
+         </button>
+         <a mat-icon-button aria-label="View usage" matTooltip="View usage" href="{{url.shortUrl}}/usage" target="_blank">
+            <mat-icon>assessment</mat-icon>
+         </a>
+         <button mat-icon-button aria-label="Remove" matTooltip="Remove" (click)="remove(url)">
+            <mat-icon>delete_forever</mat-icon>
+         </button>
+      </ng-container>
    </span>
 </span>
 <mat-dialog-content></mat-dialog-content>
