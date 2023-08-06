@@ -1,18 +1,19 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IUrl } from 'src/app/interfaces/url.interface';
-import { IPasswordDialogResult } from './password-dialog-result.interface';
+import { IPasswordDialogResult } from './dialog-result.interface';
+import { IDialogData } from './dialog-data.interface';
 
 @Component({
    selector: 'app-password-dialog',
    templateUrl: './password-dialog.component.html'
 })
-export class PasswordDialogComponent {
+export class DialogComponent {
    public inputText: string | null = null;
    public showValidation: boolean = false;
 
-   constructor(public dialogRef: MatDialogRef<PasswordDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public url: IUrl) { }
+   constructor(public dialogRef: MatDialogRef<DialogComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: IDialogData
+      ) { }
 
    public cancel(): void {
       const result: IPasswordDialogResult = { submitted: false };

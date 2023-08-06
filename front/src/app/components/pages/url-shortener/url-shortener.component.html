@@ -14,10 +14,6 @@
    </mat-card>
 </section>
 <section class="shortened-url-section">
-   <mat-card *ngIf="shortenedUrls.length">
-      <mat-card-content>
-         <app-url-info [urls]="shortenedUrls" (removeUrl)="removeUrl($event)" (passwordSet)="passwordSet($event)">
-         </app-url-info>
-      </mat-card-content>
-   </mat-card>
+   <app-url-info-list [urls]="urlLocalStorageService.shortenedUrls">
+   </app-url-info-list>
 </section>

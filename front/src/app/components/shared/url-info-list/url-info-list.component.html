@@ -1,0 +1,9 @@
+<mat-card *ngIf="urlLocalStorageService.shortenedUrls.length">
+   <mat-card-content>
+         <ul>
+            <li *ngFor="let url of urls">
+               <app-url-info [url]="url"></app-url-info>
+            </li>
+         </ul>
+   </mat-card-content>
+</mat-card>

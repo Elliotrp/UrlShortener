@@ -1,5 +1,4 @@
-
-export interface IGetRequestQuery {
+export interface IGetUrlRequestQueryParams {
    password?: string;
    browser?: string;
    deviceType?: string;

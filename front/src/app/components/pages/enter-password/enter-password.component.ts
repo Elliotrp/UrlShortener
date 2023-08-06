@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { ErrorCode } from 'src/app/enums/error-code.enum';
+import { IDeviceInfo } from 'src/app/interfaces/device-info.interface';
+import { IGetUrlRequestQueryParams } from 'src/app/interfaces/get-url-request-query-params.interface';
+import { ILocation } from 'src/app/interfaces/location.interface';
+import { DeviceService } from 'src/app/services/device/device.service';
+import { LocationService } from 'src/app/services/location/location.service';
 import { UrlService } from 'src/app/services/url/url.service';
 
 @Component({
@@ -17,6 +23,8 @@ export class EnterPasswordComponent {
 
    constructor(private readonly activatedRoute: ActivatedRoute,
       private readonly urlService: UrlService,
+      private readonly locationService: LocationService,
+      private readonly deviceService: DeviceService,
       private readonly router: Router) { }
 
    public submitPassword(): void {
@@ -25,7 +33,18 @@ export class EnterPasswordComponent {
          const shortKey: string | null = this.activatedRoute.snapshot.paramMap.get('shortKey');
          if (shortKey && password) {
             this.isSubmitting = true;
-            this.urlService.getUrl(shortKey, password).subscribe((response) => {
+            this.locationService.getLocation().pipe(
+               switchMap((location: ILocation) => {
+                  const deviceInfo: IDeviceInfo = this.deviceService.getDeviceInfo();
+                  const queryParams: IGetUrlRequestQueryParams = {
+                     password: password,
+                     ...location,
+                     ...deviceInfo,
+                     dateTime: new Date().toLocaleString()
+                  };
+                  return this.urlService.getUrl(shortKey, queryParams);
+               })
+            ).subscribe((response) => {
                if (response.body?.targetUrl) {
                   this.router.navigate(['..'], { relativeTo: this.activatedRoute });
                } else if (response.body?.error.errorCode === ErrorCode.InvalidPassword) {

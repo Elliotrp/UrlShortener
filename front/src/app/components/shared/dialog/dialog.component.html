@@ -1,0 +1,13 @@
+<h2 mat-dialog-title *ngIf="!data.remove">Password protect your link</h2>
+<h2 mat-dialog-title *ngIf="data.remove">{{data.removeMessage}}</h2>
+<div mat-dialog-content *ngIf="!data.remove">
+   <mat-form-field>
+      <input matInput [(ngModel)]="inputText" placeholder="Enter a password" required>
+      <mat-error *ngIf="showValidation">Please enter a password</mat-error>
+   </mat-form-field>
+</div>
+<div mat-dialog-actions align="center">
+   <button mat-button (click)="cancel()">Cancel</button>
+   <button *ngIf="!data.remove" mat-button color="primary" (click)="set()">Set password</button>
+   <button *ngIf="data.remove" mat-button color="warn" (click)="remove()">Remove</button>
+</div>
