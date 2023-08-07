@@ -1,5 +1,5 @@
 export interface IUrl {
-   id?: number;
+   id: number;
    shortUrl?: string;
    targetUrl?: string;
    password?: boolean;

@@ -1,7 +1,7 @@
 <app-url-info [url]="url"></app-url-info>
 <mat-card>
    <mat-card-content>
-      <h1 class="mat-h1">This link has been clicked <b>10</b> times.</h1>
+      <h1 class="mat-h1">This link has been clicked <b>{{accessCount}}</b> times.</h1>
       <nav mat-tab-nav-bar [tabPanel]="tabPanel">
          <a mat-tab-link *ngFor="let link of links"
             (click)="activeLink = link.path"

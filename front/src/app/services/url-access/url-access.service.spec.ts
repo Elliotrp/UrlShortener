@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UsageDataService } from './usage-data.service';
+import { UrlAccessService } from './url-access.service';
 
-describe('UsageDataService', () => {
-  let service: UsageDataService;
+describe('UrlAccessService', () => {
+  let service: UrlAccessService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(UsageDataService);
+    service = TestBed.inject(UrlAccessService);
   });
 
   it('should be created', () => {

@@ -1,9 +1,4 @@
-import { ErrorCode } from "../enums/error-code.enum";
+import { IResponse } from "./response.interface";
 import { IUrl } from "./url.interface";
 
-export interface IUrlResponse extends IUrl {
-   error: {
-      errorCode: ErrorCode;
-      errorMessage: string;
-   };
-}
+export interface IUrlResponse extends IUrl, IResponse { }

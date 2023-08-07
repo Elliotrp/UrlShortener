@@ -58,7 +58,7 @@ export class UrlInfoComponent {
 
       dialogRef.afterClosed().subscribe((result: IPasswordDialogResult) => {
          if (result.submitted) {
-            this.urlService.setUrlPassword(url, result.password).subscribe(
+            this.urlService.setUrlPassword(url.id, result.password).subscribe(
                () => {
                   url.password = !!result.password;
                   this.urlLocalStorageService.replaceUrl(url);
