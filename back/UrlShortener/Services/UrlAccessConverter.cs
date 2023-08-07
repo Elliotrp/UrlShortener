@@ -29,14 +29,6 @@ public class UrlAccessConverter : IUrlAccessConverter
       };
    }
 
-   public UrlAccessCount ToUrlAccessCount(CreateAllUrlAccessRequest request)
-   {
-      return new UrlAccessCount
-      {
-         UrlId = request.Url.Id
-      };
-   }
-
    public UrlAccessCountry ToUrlAccessCountry(CreateAllUrlAccessRequest request)
    {
       if (request.CountryCode == null)

@@ -39,12 +39,6 @@ public class UrlAccessService : IUrlAccessService
          this.urlAccessConverter.ToUrlAccessBrowser,
          urlAccess => urlAccess.Browser == request.Browser);
 
-      await this.UpsertUrlAccess<UrlAccessCount, CreateAllUrlAccessRequest>(
-         request.Url,
-         request,
-         this.urlAccessConverter.ToUrlAccessCount,
-         urlAccess => true);
-
       await this.UpsertUrlAccess<UrlAccessCountry, CreateAllUrlAccessRequest>(
          request.Url,
          request,
@@ -89,28 +83,6 @@ public class UrlAccessService : IUrlAccessService
       try
       {
          response.UrlAccesses = await this.context.Set<TUrlAccess>().Where(a => a.UrlId == urlId).ToListAsync();
-      }
-      catch (Exception ex)
-      {
-         this.logger.LogError(ex, ex.Message);
-         response.Error = new Error
-         {
-            ErrorCode = ErrorCode.GetError,
-            ErrorMessage = "An error occurred while retrieving the data. Please try again later."
-         };
-      }
-
-      return response;
-   }
-
-   public async Task<GetUrlAccessCountResponse> GetUrlAccessCount(int urlId)
-   {
-      GetUrlAccessCountResponse response = new GetUrlAccessCountResponse();
-
-      try
-      {
-         UrlAccessCount urlAccessCount = await this.context.UrlAccessCount.FirstOrDefaultAsync(a => a.UrlId == urlId);
-         response.Count = urlAccessCount.Count;
       }
       catch (Exception ex)
       {

@@ -9,6 +9,4 @@ public interface IUrlAccessService
    public Task CreateAllUrlAccess(CreateAllUrlAccessRequest request);
 
    public Task<BaseListUrlAccessResponse<TUrlAccess>> ListUrlAccess<TUrlAccess>(int urlId) where TUrlAccess : BaseUrlAccess;
-
-   public Task<GetUrlAccessCountResponse> GetUrlAccessCount(int urlId);
 }

@@ -9,7 +9,7 @@ using UrlShortener.Models;
 using UrlShortener.Services;
 
 [ApiController]
-[Route("url/{id}/[controller]")]
+[Route("Url/{id}/[controller]")]
 public class UrlAccessController : ControllerBase
 {
    private readonly ILogger<UrlAccessController> logger;
@@ -30,19 +30,10 @@ public class UrlAccessController : ControllerBase
       return ResponseStatusHelper.GetStatusCode(this, response);
    }
 
-   
    [HttpGet("browser")]
    public async Task<IActionResult> ListUrlAccessBrowser(int id)
    {
       BaseListUrlAccessResponse<UrlAccessBrowser> response = await this.urlAccessService.ListUrlAccess<UrlAccessBrowser>(id);
-      return ResponseStatusHelper.GetStatusCode(this, response);
-   }
-
-      
-   [HttpGet("count")]
-   public async Task<IActionResult> GetUrlAccessCount(int id)
-   {
-      GetUrlAccessCountResponse response = await this.urlAccessService.GetUrlAccessCount(id);
       return ResponseStatusHelper.GetStatusCode(this, response);
    }
       

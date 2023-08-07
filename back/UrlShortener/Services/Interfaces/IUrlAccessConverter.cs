@@ -9,8 +9,6 @@ public interface IUrlAccessConverter
 
    public UrlAccessBrowser ToUrlAccessBrowser(CreateAllUrlAccessRequest request);
 
-   public UrlAccessCount ToUrlAccessCount(CreateAllUrlAccessRequest request);
-
    public UrlAccessCountry ToUrlAccessCountry(CreateAllUrlAccessRequest request);
 
    public UrlAccessDate ToUrlAccessDate(CreateAllUrlAccessRequest request);

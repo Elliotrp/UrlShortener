@@ -14,8 +14,6 @@ public class UrlShortenerDbContext : DbContext
 
    public DbSet<UrlAccessBrowser> UrlAccessBrowser { get; set; }
 
-   public DbSet<UrlAccessCount> UrlAccessCount { get; set; }
-
    public DbSet<UrlAccessCountry> UrlAccessCountry { get; set; }
 
    public DbSet<UrlAccessDate> UrlAccessDate { get; set; }
