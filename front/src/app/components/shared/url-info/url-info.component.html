@@ -1,10 +1,10 @@
 <span *ngIf="url" class="wrapper">
-   <p matTooltip="{{url.targetUrl}}" class="target-url mat-typography">{{url.targetUrl}}</p>
+   <p matTooltip="{{url.targetUrl}}" class="target-url mat-typography">{{ url.targetUrl | removeHttp}}</p>
    <span>
-      <a mat-stroked-button color="primary" href="{{url.shortUrl}}" target="_blank"
+      <a mat-stroked-button color="primary" href="{{ url.shortUrl }}" target="_blank"
          matTooltip="Click to visit the shortened URL" class="link-button">
          <mat-icon>launch</mat-icon>
-         {{url.shortUrl}}
+         {{ url.shortUrl | removeHttp }}
       </a>
    </span>
    <span class="buttons">
@@ -17,7 +17,7 @@
             (click)="showPasswordDialog(url)">
             <mat-icon>{{ url.password ? 'lock' : 'lock_open' }}</mat-icon>
          </button>
-         <a mat-icon-button aria-label="View usage" matTooltip="View usage" href="{{url.shortUrl}}/usage" target="_blank">
+         <a mat-icon-button aria-label="View usage" matTooltip="View usage" href="{{ url.shortUrl }}/usage" target="_blank">
             <mat-icon>assessment</mat-icon>
          </a>
          <button mat-icon-button aria-label="Remove" matTooltip="Remove" (click)="remove(url)">

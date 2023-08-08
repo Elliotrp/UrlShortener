@@ -19,13 +19,10 @@ export class ChoroplethComponent implements OnInit {
    private colour: d3.ScaleThreshold<number, string>;
 
    constructor() {
-      this.svg = d3.select("svg");
       this.colour = d3.scaleThreshold<number, string>().domain(d3.range(2, 10)).range(d3.schemeBlues[9]);
-      d3.json<WorldAtlas>('/assets/countries-110m.json').then(this.create);
    }
    ngOnInit(): void {
       this.svg = d3.select("svg");
-      this.colour = d3.scaleThreshold<number, string>().domain(d3.range(2, 10)).range(d3.schemeBlues[9]);
       d3.json<WorldAtlas>('/assets/countries-110m.json').then(this.create);
    }
    
