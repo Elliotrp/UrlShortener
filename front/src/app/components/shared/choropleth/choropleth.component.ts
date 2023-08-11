@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import { feature, mesh } from 'topojson-client';
 import { WorldAtlas } from 'topojson';
-import { ChoroplethDataMap } from './choropleth-data.class';
+import { UrlAccessDataMap } from '../../classes/url-access-data-map.class';
 import { Feature } from 'geojson';
 
 @Component({
@@ -12,14 +12,14 @@ import { Feature } from 'geojson';
   encapsulation: ViewEncapsulation.None,
 })
 export class ChoroplethComponent implements OnInit {
-   @Input() public data: ChoroplethDataMap = new ChoroplethDataMap();
+   @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
 
    private svg: d3.Selection<SVGElement, any, HTMLElement, any> | undefined;
    private path: d3.GeoPath | undefined;
-   private colour: d3.ScaleThreshold<number, string>;
+   private colour: d3.ScaleSequential<string, never>;
 
    constructor() {
-      this.colour = d3.scaleThreshold<number, string>().domain(d3.range(2, 10)).range(d3.schemeBlues[9]);
+      this.colour = d3.scaleSequential(d3.interpolateBlues).domain([0, 100]);
    }
    ngOnInit(): void {
       this.svg = d3.select("svg");
@@ -73,9 +73,4 @@ export class ChoroplethComponent implements OnInit {
          window.alert(country.properties?.['name'] + ' has ' + count + ' clicks.');
       }
    }
-
-   //TODO
-   // mock realistic data and adjust DONE
-   // put in tab component
-   // rename clicks to count and have relative count, keep this component generic
 }

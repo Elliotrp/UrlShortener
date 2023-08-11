@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ChoroplethDataMap } from '../../../shared/choropleth/choropleth-data.class';
+import { UrlAccessDataMap } from '../../../classes/url-access-data-map.class';
+import { HttpResponse } from '@angular/common/http';
+import { IListUrlAccessResponse } from 'src/app/interfaces/list-url-access-response.interface';
+import { IUrlAccessCountry } from 'src/app/interfaces/url-access-country.interface';
+import { UrlAccessDataService } from 'src/app/services/url-access-data.service.ts/url-access-data.service';
+import { UrlAccessService } from 'src/app/services/url-access/url-access.service';
+import { IUsageResolverData } from '../usage-resolver-data.interface';
+import { IUrl } from 'src/app/interfaces/url.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-geographic-charts',
@@ -7,12 +15,23 @@ import { ChoroplethDataMap } from '../../../shared/choropleth/choropleth-data.cl
   styleUrls: ['./geographic-charts.component.scss']
 })
 export class GeographicChartsComponent implements OnInit {
-   public choroplethData: ChoroplethDataMap = new ChoroplethDataMap();
+   public url: IUrl;
+   public countryAccessDataMap: UrlAccessDataMap = new UrlAccessDataMap();
+
+   constructor(
+      private readonly urlAccessService: UrlAccessService,
+      private readonly urlAccessDataService: UrlAccessDataService,
+      activatedRoute: ActivatedRoute
+   ) {
+      const resolverData: IUsageResolverData = activatedRoute.parent?.snapshot.data['resolverData'];
+      this.url = resolverData.url;
+   }
 
    public ngOnInit(): void {
-      const testData = [{ id: '156', count: 10 }, { id: 'GBR', count: 4}, { id: 'TZA', count: 3}, { id: 'AUS', count: 1}, { id: 'USA', count: 2}, { id: 'DEU', count: 7}];
-      testData.forEach((d: any) => {
-         this.choroplethData.set(d.id, { count: 1, relativeCount: d.count })
+      this.urlAccessService.listUrlAccessCountries(this.url.id).subscribe((response: HttpResponse<IListUrlAccessResponse<IUrlAccessCountry>>) => {
+         if (response.body) {
+            this.countryAccessDataMap = this.urlAccessDataService.toUrlAccessDataMap<IUrlAccessCountry>(response.body, (urlAccessCountry: IUrlAccessCountry) => urlAccessCountry.countryCode);
+         }
       });
    }
 }
