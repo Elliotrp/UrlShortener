@@ -1,21 +1,21 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IPasswordDialogResult } from './dialog-result.interface';
-import { IDialogData } from './dialog-data.interface';
+import { IUrlDialogResult } from './url-dialog-result.interface';
+import { IDialogData } from './url-dialog-data.interface';
 
 @Component({
-   templateUrl: './dialog.component.html'
+   templateUrl: './url-dialog.component.html'
 })
-export class DialogComponent {
+export class UrlDialogComponent {
    public inputText: string | null = null;
    public showValidation: boolean = false;
 
-   constructor(public dialogRef: MatDialogRef<DialogComponent>,
+   constructor(public dialogRef: MatDialogRef<UrlDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: IDialogData
-      ) { }
+   ) { }
 
    public cancel(): void {
-      const result: IPasswordDialogResult = { submitted: false };
+      const result: IUrlDialogResult = { submitted: false };
       this.dialogRef.close(result);
    }
 
@@ -33,7 +33,7 @@ export class DialogComponent {
    }
 
    private submit(): void {
-      const result: IPasswordDialogResult = { submitted: true, password: this.inputText };
+      const result: IUrlDialogResult = { submitted: true, password: this.inputText };
       this.dialogRef.close(result);
    }
 }

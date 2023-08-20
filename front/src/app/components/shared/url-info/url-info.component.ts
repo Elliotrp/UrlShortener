@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IUrl } from 'src/app/interfaces/url.interface';
-import { DialogComponent } from '../dialog/dialog.component';
-import { IPasswordDialogResult } from '../dialog/dialog-result.interface';
+import { UrlDialogComponent } from './url-dialog/url-dialog.component';
+import { IUrlDialogResult } from './url-dialog/url-dialog-result.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { UrlService } from 'src/app/services/url/url.service';
@@ -29,7 +29,7 @@ export class UrlInfoComponent {
    }
 
    public remove(url: IUrl): void {
-      const dialogRef = this.dialog.open(DialogComponent, {
+      const dialogRef = this.dialog.open(UrlDialogComponent, {
          width: '300px',
          data: {
             url: url,
@@ -38,7 +38,7 @@ export class UrlInfoComponent {
          }
       });
 
-      dialogRef.afterClosed().subscribe((result: IPasswordDialogResult) => {
+      dialogRef.afterClosed().subscribe((result: IUrlDialogResult) => {
          if (result.submitted) {
             this.urlLocalStorageService.removeUrl(url);
          }
@@ -47,7 +47,7 @@ export class UrlInfoComponent {
    }
 
    public showPasswordDialog(url: IUrl): void {
-      const dialogRef = this.dialog.open(DialogComponent, {
+      const dialogRef = this.dialog.open(UrlDialogComponent, {
          width: '300px',
          data: {
             url: url,
@@ -56,7 +56,7 @@ export class UrlInfoComponent {
          }
       });
 
-      dialogRef.afterClosed().subscribe((result: IPasswordDialogResult) => {
+      dialogRef.afterClosed().subscribe((result: IUrlDialogResult) => {
          if (result.submitted) {
             this.urlService.setUrlPassword(url.id, result.password).subscribe(
                () => {

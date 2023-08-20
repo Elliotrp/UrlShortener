@@ -3,26 +3,29 @@
    stroke: #000;
    stroke-linejoin: round;
    stroke-width: 0.25px;
+   .has-count :hover {
+      stroke-width: 1px;
+      transition: stroke-width 100ms linear;
+   }
 }
 
-.has-count {
-   cursor: pointer;
+.countries path.has-count:hover {
+   stroke-width: 1px;
+   transition: stroke-width 100ms linear;
 }
 
 .selected {
    stroke-width: 1px;
-   transition: stroke-width 200ms linear;
-}
-
-.translucent {
-   opacity: 0.7;
-   transition: opacity 300ms linear;
-   backface-visibility: hidden;
-   transform: translateZ(0);
-   -webkit-font-smoothing: subpixel-antialiased;
+   transition: stroke-width 100ms linear;
 }
 
 path {
    opacity: 1;
    transition: opacity 200ms linear;
+}
+
+.container {
+   width: 100%;
+   position: relative;
+   white-space: nowrap;
 }

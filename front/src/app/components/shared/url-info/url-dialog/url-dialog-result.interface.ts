@@ -1,4 +1,4 @@
-export interface IPasswordDialogResult {
+export interface IUrlDialogResult {
    submitted: boolean;
    password?: string | null;
 }

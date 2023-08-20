@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChoroplethComponent } from './choropleth.component';
+import { HorizontalBarComponent } from './horizontal-bar.component';
 import { ChartTooltipModule } from '../chart-tooltip/chart-tooltip.module';
 
 @NgModule({
-   declarations: [ChoroplethComponent],
-   exports: [ChoroplethComponent],
+   declarations: [HorizontalBarComponent],
+   exports: [HorizontalBarComponent],
    imports: [
       CommonModule,
       ChartTooltipModule
    ]
 })
-export class ChoroplethModule { }
+export class HorizontalBarModule { }

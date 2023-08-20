@@ -207,7 +207,7 @@
         {
           "type": "MultiPolygon",
           "arcs": [[[169]], [[-161, 170, 171, 172]], [[173]], [[174]]],
-          "id": "578",
+          "id": "NOR",
           "properties": { "name": "Norway" }
         },
         {
@@ -343,6 +343,7 @@
             [[237, 238, 239, 240, 241, 242, 243, 244]],
             [[245]]
           ],
+          "id": "FRA",
           "properties": { "name": "France" }
         },
         {
@@ -1151,6 +1152,7 @@
         {
           "type": "Polygon",
           "arcs": [[-493, -594, -591, -589]],
+          "id": "XXK",
           "properties": { "name": "Kosovo" }
         },
         {

@@ -1,0 +1,21 @@
+@import "/node_modules/flag-icons/css/flag-icons.min.css";
+
+:host {
+   position: absolute;
+}
+
+div {
+   background-color: rgba(0, 0, 0, 0.7);
+   color: white;
+   border-radius: 5px;
+   padding: 5px 10px;
+   max-width: 200px;
+}
+
+p {
+   margin-bottom: 0px;
+}
+
+span {
+   top: -1px;
+}

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from 'ngx-clipboard';
-import { DialogModule } from '../dialog/dialog.module';
+import { UrlDialogModule } from './url-dialog/url-dialog.module';
 import { RemoveHttpModule } from 'src/app/pipes/remove-http/remove-http.module';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { RemoveHttpModule } from 'src/app/pipes/remove-http/remove-http.module';
       MatIconModule,
       MatSnackBarModule,
       MatTooltipModule,
-      DialogModule,
+      UrlDialogModule,
       RemoveHttpModule
    ]
 })

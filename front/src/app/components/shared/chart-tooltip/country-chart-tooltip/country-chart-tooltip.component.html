@@ -1,0 +1,4 @@
+<div class="mat-typography" *ngIf="data">
+   <p><span [class]="flagClass"></span> {{ data.label }}</p>
+   <p>{{ data.count }} {{ data.count === '1' ? 'click' : 'clicks' }}</p>
+</div>

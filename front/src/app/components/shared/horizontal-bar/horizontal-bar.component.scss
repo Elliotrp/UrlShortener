@@ -1,0 +1,34 @@
+.data-label {
+   font-family: sans-serif;
+   font-size: 14px;
+   font-weight: bold;
+   text-anchor: end;
+   fill: white;
+   .outside-bar {
+      text-anchor: start;
+      fill: black;
+   }
+}
+
+.tick {
+   font-size: 12px;
+}
+
+.container {
+   width: 100%;
+   position: relative;
+   white-space: nowrap;
+}
+
+rect {
+   fill: #3f51b5;
+   &:hover {
+      fill: #4d5ebe;
+   }
+}
+
+.round-bar {
+   rect {
+      rx: 5px;
+   }
+}
