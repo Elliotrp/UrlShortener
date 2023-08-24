@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, Type, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import { UrlAccessDataMap } from 'src/app/classes/url-access-data-map.class';
 import { IUrlAccessData } from 'src/app/interfaces/url-access-data.interface';
@@ -15,33 +15,34 @@ import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface
 export class HorizontalBarComponent implements OnChanges {
    @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
-   @ViewChild('container') container: ElementRef | undefined;
-
+   @ViewChild('horizontalBarContainer') container: ElementRef | undefined;
+   @ViewChild('horizontalBarSvg', { read: ViewContainerRef }) svgElement: ViewContainerRef | undefined;
+   
    private svgg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
    private containerWidth: number | undefined;
    private x: d3.ScaleLinear<number, number> | any;
    private margin = { top: 20, right: 30, bottom: 40, left: 100 };
-   private width: number = 700;
-   private height: number = 400;
-
+   private width: number | undefined;
+   private height: number | undefined;
 
    @HostListener('window:resize')
-   onResize() {
+   private onResize(): void {
       if (this.containerWidth !== this.container?.nativeElement.offsetWidth) {
          this.ngOnChanges();
       }
    }
-
-   constructor(
-      private readonly chartTooltipService: ChartTooltipService
-   ) { }
-
+   
+   constructor(private readonly chartTooltipService: ChartTooltipService) { }
+   
    public ngOnChanges(): void {
       this.containerWidth = this.container?.nativeElement.offsetWidth;
-      // set the dimensions and margins of the graph
-      this.width = (this.containerWidth ?? 700) - this.margin.left - this.margin.right;
-      this.height = [...this.data].length * 45;
+      if (!this.containerWidth) {
+         return;
+      }
 
+      this.width = this.containerWidth - this.margin.left - this.margin.right;
+      this.height = [...this.data].length * 45;
+      
       if (this.svgg) {
          this.svgg.remove()
       }
@@ -64,7 +65,10 @@ export class HorizontalBarComponent implements OnChanges {
          .padding(.1);
 
       this.svgg.append("g")
-         .call(d3.axisLeft(y).tickSizeOuter(0))
+         .call(d3.axisLeft(y)
+            .tickSizeOuter(0)
+            .tickSizeInner(0)
+            .tickPadding(10));
 
       //Bars
       this.svgg.append("g")
@@ -101,28 +105,24 @@ export class HorizontalBarComponent implements OnChanges {
             .classed('outside-bar', true)
             .attr("dx", +4));
 
+      // tooltip
       this.svgg.selectAll('rect')
          .on('mouseover', (event: MouseEvent, d: any) => {
-            if (this.container && this.tooltipType) {
+            if (this.svgElement && this.tooltipType) {
                const data: IChartTooltipData = {
                   label: d[0],
-                  count: d[1].count,
+                  count: d[1].count.toString(),
                   relativeCount: Math.round(d[1].relativeCount).toString()
                }
                this.chartTooltipService.showTooltip(
                   data,
-                  this.container,
+                  this.svgElement,
                   this.tooltipType,
-                  d3.pointer(event, this.container.nativeElement)[0] + 10,
-                  d3.pointer(event, this.container.nativeElement)[1] + 5);
+                  event);
             }
          })
          .on('mousemove', (event: MouseEvent, d: any) => {
-            if (this.container && this.tooltipType) {
-               this.chartTooltipService.updateTooltipPosition(
-                  d3.pointer(event, this.container.nativeElement)[0] + 10,
-                  d3.pointer(event, this.container.nativeElement)[1] + 5);
-            }
+            this.chartTooltipService.updateTooltipPosition(event);
          })
          .on('mouseout', () => {
             this.chartTooltipService.hideTooltip();

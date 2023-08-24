@@ -1,4 +1,4 @@
-import { Injectable, ComponentFactoryResolver, Injector, ApplicationRef, ComponentRef, Type, ComponentFactory, ElementRef } from '@angular/core';
+import { Injectable, ComponentRef, Type, ViewContainerRef } from '@angular/core';
 import { AbstractChartTooltipComponent } from 'src/app/components/shared/chart-tooltip/abstract-chart-tooltip.component';
 import { IChartTooltipData } from 'src/app/components/shared/chart-tooltip/chart-tooltip-data.interface';
 
@@ -7,28 +7,27 @@ import { IChartTooltipData } from 'src/app/components/shared/chart-tooltip/chart
 })
 export class ChartTooltipService {
    private tooltipRef: ComponentRef<AbstractChartTooltipComponent> | undefined;
+   private viewContainerRef: ViewContainerRef | undefined;
 
-   constructor(
-      private resolver: ComponentFactoryResolver,
-      private injector: Injector,
-      private appRef: ApplicationRef
-   ) { }
-
-   public showTooltip(data: IChartTooltipData, container: ElementRef, tooltipType: Type<AbstractChartTooltipComponent>, x: number, y: number): void {
+   public showTooltip(
+      data: IChartTooltipData,
+      container: ViewContainerRef,
+      tooltipType: Type<AbstractChartTooltipComponent>,
+      mouseEvent: MouseEvent): void {
       if (this.tooltipRef) {
          this.hideTooltip();
       }
 
-      const factory: ComponentFactory<AbstractChartTooltipComponent> = this.resolver.resolveComponentFactory(tooltipType);
-      this.tooltipRef = factory.create(this.injector);
+      this.viewContainerRef = container;
+      this.tooltipRef = container.createComponent(tooltipType);
       this.tooltipRef.instance.data = data;
-      this.appRef.attachView(this.tooltipRef.hostView);
-      container.nativeElement.appendChild(this.tooltipRef.location.nativeElement);
-      this.updateTooltipPosition(x, y);
+      this.updateTooltipPosition(mouseEvent);
    }
 
-   public updateTooltipPosition(x: number, y: number): void {
-      if (this.tooltipRef) {
+   public updateTooltipPosition(mouseEvent: MouseEvent): void {
+      if (this.tooltipRef && mouseEvent) {
+         const x = mouseEvent.offsetX + 10;
+         const y = mouseEvent.offsetY + 5;
          this.tooltipRef.location.nativeElement.style.position = 'absolute';
          this.tooltipRef.location.nativeElement.style.left = `${x}px`;
          this.tooltipRef.location.nativeElement.style.top = `${y}px`;
@@ -36,8 +35,8 @@ export class ChartTooltipService {
    }
 
    public hideTooltip(): void {
-      if (this.tooltipRef) {
-         this.appRef.detachView(this.tooltipRef.hostView);
+      if (this.tooltipRef && this.viewContainerRef) {
+         this.viewContainerRef.clear();
          this.tooltipRef.destroy();
          this.tooltipRef = undefined;
       }

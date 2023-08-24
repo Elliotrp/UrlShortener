@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, Type, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import { feature, mesh } from 'topojson-client';
 import { WorldAtlas } from 'topojson';
@@ -19,7 +19,7 @@ import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface
 export class ChoroplethComponent implements OnChanges {
    @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
-   @ViewChild('container') container: ElementRef | undefined;
+   @ViewChild('choroplethSvg', { read: ViewContainerRef }) svgViewContainer: ViewContainerRef | undefined;
 
    private svg: d3.Selection<SVGElement, any, HTMLElement, any> | undefined;
    private path: d3.GeoPath | undefined;
@@ -53,7 +53,7 @@ export class ChoroplethComponent implements OnChanges {
                .on('mouseover', (event: MouseEvent, d: any) => {
                   const country: Feature = d as Feature;
                   const urlAccess: IUrlAccessData | undefined = this.data.getItemById(country.id);
-                  if (country.id && urlAccess && this.container && this.tooltipType) {
+                  if (country.id && urlAccess && this.svgViewContainer && this.tooltipType) {
                      const countryName: string | undefined = byIso(country.id)?.country;
                      if (countryName) {
                         const data: IChartTooltipData = {
@@ -63,24 +63,18 @@ export class ChoroplethComponent implements OnChanges {
                         }
                         this.chartTooltipService.showTooltip(
                            data,
-                           this.container,
+                           this.svgViewContainer,
                            this.tooltipType,
-                           d3.pointer(event, this.container.nativeElement)[0] + 10,
-                           d3.pointer(event, this.container.nativeElement)[1] + 5);
+                           event);
                      }
                   }
                })
                .on('mousemove', (event: MouseEvent, d: any) => {
-                  if (this.container && this.tooltipType) {
-                     this.chartTooltipService.updateTooltipPosition(
-                        d3.pointer(event, this.container.nativeElement)[0] + 10,
-                        d3.pointer(event, this.container.nativeElement)[1] + 5);
-                  }
+                  this.chartTooltipService.updateTooltipPosition(event);
                })
                .on('mouseout', () => {
                   this.chartTooltipService.hideTooltip();
                });
-
          }
       }
    }
@@ -89,13 +83,6 @@ export class ChoroplethComponent implements OnChanges {
       const relativeCount = this.data.getItemById(country.id)?.relativeCount;
       return relativeCount ? this.colour(relativeCount) : null;
    }
-
-   // private showMessage = (country: Feature): void => {
-   //    const count = this.data.getItemById(country.id)?.count;
-   //    // if (count) {
-   //       window.alert(country.properties?.['name'] + ' has ' + count + ' clicks.');
-   //    // }
-   // }
 
    private hasCount = (country: Feature): boolean => {
       return !!this.data.getItemById(country.id)?.count
