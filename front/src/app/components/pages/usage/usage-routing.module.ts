@@ -1,8 +1,9 @@
 import { Route } from '@angular/router';
 import { UsageComponent } from './usage.component';
 import { GeographicChartsComponent } from './geographic-charts/geographic-charts.component';
-import { NotFoundComponent } from '../not-found/not-found.component';
 import { usageResolver } from './usage.resolver';
+import { TemporalChartsComponent } from './temporal-charts/temporal-charts.component';
+import { MethodologicalChartsComponent } from './methodological-charts/methodological-charts.component';
 
 export const routes: Route = 
 {
@@ -19,7 +20,7 @@ export const routes: Route =
       },
       {
          path: 'when',
-         component: NotFoundComponent
+         component: TemporalChartsComponent
       },
       {
          path: 'where',
@@ -27,7 +28,7 @@ export const routes: Route =
       },
       {
          path: 'how',
-         component: NotFoundComponent
+         component: MethodologicalChartsComponent
       }
    ]
 };

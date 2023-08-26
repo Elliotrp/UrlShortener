@@ -35,15 +35,13 @@ export class GeographicChartsComponent implements OnInit {
       this.urlAccessService.listUrlAccessCountries(this.url.id).subscribe((response: HttpResponse<IListUrlAccessResponse<IUrlAccessCountry>>) => {
          if (response.body) {
             this.choroplethData = this.urlAccessDataService.toUrlAccessDataMap<IUrlAccessCountry>(
-               response.body,
+               response.body.urlAccesses,
                (urlAccessCountry: IUrlAccessCountry) => urlAccessCountry.countryCode,
-               false
-            );
+               false);
             this.horizontalBarData = this.urlAccessDataService.toUrlAccessDataMap<IUrlAccessCountry>(
-               response.body,
+               response.body.urlAccesses,
                (urlAccessCountry: IUrlAccessCountry) => byIso(urlAccessCountry.countryCode)?.country ?? urlAccessCountry.countryCode,
-               true
-            );
+               true);
          }
       });
    }

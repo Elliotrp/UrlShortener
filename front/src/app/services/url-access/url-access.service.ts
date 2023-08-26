@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IListUrlAccessResponse } from 'src/app/interfaces/list-url-access-response.interface';
 import { IUrlAccessAuthorised } from 'src/app/interfaces/url-access-authorised.interface';
 import { IUrlAccessCountry } from 'src/app/interfaces/url-access-country.interface';
+import { IUrlAccessDay } from 'src/app/interfaces/url-access-day.interface';
 import { environment } from 'src/environment';
 
 @Injectable({
@@ -25,4 +26,9 @@ export class UrlAccessService {
          { observe: 'response' });
    }
 
+   public listUrlAccessDays(urlId: number): Observable<HttpResponse<IListUrlAccessResponse<IUrlAccessDay>>> {
+      return this.http.get<IListUrlAccessResponse<IUrlAccessDay>>(
+         `${environment.apiUrl}/Url/${urlId}/UrlAccess/day`,
+         { observe: 'response' });
+   }
 }

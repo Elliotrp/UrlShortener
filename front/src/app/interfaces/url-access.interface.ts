@@ -1,5 +1,5 @@
 export interface IUrlAccess {
-   id: number;
+   id?: number;
    urlId: number;
    count: number;
 }

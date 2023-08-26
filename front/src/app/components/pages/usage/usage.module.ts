@@ -7,6 +7,8 @@ import { routes } from './usage-routing.module';
 import { GeographicChartsModule } from './geographic-charts/geographic-charts.module';
 import { UrlInfoModule } from '../../shared/url-info/url-info.module';
 import { MatCardModule } from '@angular/material/card';
+import { TemporalChartsModule } from './temporal-charts/temporal-charts.module';
+import { MethodologicalChartsModule } from './methodological-charts/methodological-charts.module';
 
 @NgModule({
    declarations: [UsageComponent],
@@ -16,6 +18,8 @@ import { MatCardModule } from '@angular/material/card';
       GeographicChartsModule,
       MatCardModule,
       MatTabsModule,
+      MethodologicalChartsModule,
+      TemporalChartsModule,
       UrlInfoModule,
       RouterModule.forChild([routes])
    ]

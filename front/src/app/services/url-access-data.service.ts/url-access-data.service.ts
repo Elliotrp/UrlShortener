@@ -22,10 +22,10 @@ export class UrlAccessDataService {
       );
    }
 
-   public toUrlAccessDataMap<T extends IUrlAccess>(listUrlAccessResponse: IListUrlAccessResponse<T>, getIdFunc: (urlAccess: T) => string, sort?: boolean): UrlAccessDataMap {
+   public toUrlAccessDataMap<T extends IUrlAccess>(urlAccesses: T[], getIdFunc: (urlAccess: T) => string, sort?: boolean): UrlAccessDataMap {
       const urlAccessDataMap: UrlAccessDataMap = new UrlAccessDataMap();
-      const total = listUrlAccessResponse.urlAccesses.reduce((sum, current) => sum + current.count, 0) / 100;
-      let array: T[] = listUrlAccessResponse.urlAccesses;
+      const total = urlAccesses.reduce((sum, current) => sum + current.count, 0) / 100;
+      let array: T[] = urlAccesses;
       if (sort) {
          array = array.sort((a, b) => b.count - a.count);
       }
