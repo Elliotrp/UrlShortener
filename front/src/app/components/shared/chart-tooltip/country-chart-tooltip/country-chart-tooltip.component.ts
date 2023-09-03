@@ -3,7 +3,6 @@ import { AbstractChartTooltipComponent } from '../abstract-chart-tooltip.compone
 import { byCountry } from 'country-code-lookup';
 
 @Component({
-   selector: 'app-country-chart-tooltip',
    templateUrl: './country-chart-tooltip.component.html',
    styleUrls: ['./country-chart-tooltip.component.scss']
 })

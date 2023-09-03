@@ -1,1 +1,3 @@
-<app-horizontal-bar [data]="horizontalBarData" [tooltipType]="dayTooltipType"></app-horizontal-bar>
+<app-horizontal-bar [data]="daysOfWeekData" [tooltipType]="dayTooltipType" [title]="'Most Popular Days'"></app-horizontal-bar>
+<app-vertical-bar [data]="lastThirtyDaysData" [tooltipType]="dayTooltipType" [title]="'Last Thirty Days'"
+   [tickFrequency]="3" [showLabels]="false"></app-vertical-bar>

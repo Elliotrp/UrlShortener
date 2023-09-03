@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DayChartTooltipComponent } from './day-chart-tooltip.component';
+import { GenericClicksTooltipComponent } from './generic-clicks-tooltip.component';
 
 describe('DayChartTooltipComponent', () => {
-  let component: DayChartTooltipComponent;
-  let fixture: ComponentFixture<DayChartTooltipComponent>;
+  let component: GenericClicksTooltipComponent;
+  let fixture: ComponentFixture<GenericClicksTooltipComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DayChartTooltipComponent]
+      declarations: [GenericClicksTooltipComponent]
     });
-    fixture = TestBed.createComponent(DayChartTooltipComponent);
+    fixture = TestBed.createComponent(GenericClicksTooltipComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

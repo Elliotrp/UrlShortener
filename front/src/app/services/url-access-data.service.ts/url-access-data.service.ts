@@ -17,20 +17,20 @@ export class UrlAccessDataService {
    public getClickCount(urlId: number): Observable<number> {
       return this.urlAccessService.listUrlAccessAuthorised(urlId).pipe(
          map((response: HttpResponse<IListUrlAccessResponse<IUrlAccessAuthorised>>) => {
-            return response.body?.urlAccesses.reduce((sum, current) => sum + current.count, 0) ?? 0;
+            return response.body?.urlAccesses.reduce((sum, current): number => sum + current.count, 0) ?? 0;
          })
       );
    }
 
    public toUrlAccessDataMap<T extends IUrlAccess>(urlAccesses: T[], getIdFunc: (urlAccess: T) => string, sort?: boolean): UrlAccessDataMap {
       const urlAccessDataMap: UrlAccessDataMap = new UrlAccessDataMap();
-      const total = urlAccesses.reduce((sum, current) => sum + current.count, 0) / 100;
+      const total = urlAccesses.reduce((sum, current): number => sum + current.count, 0) / 100;
       let array: T[] = urlAccesses;
       if (sort) {
          array = array.sort((a, b) => b.count - a.count);
       }
 
-      array.forEach((urlAccess: T) => {
+      array.forEach((urlAccess: T): void => {
          urlAccessDataMap.set(getIdFunc(urlAccess), { count: urlAccess.count, relativeCount: urlAccess.count / total })
       });
       return urlAccessDataMap;

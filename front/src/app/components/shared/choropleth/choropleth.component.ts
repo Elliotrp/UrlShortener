@@ -19,6 +19,8 @@ import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface
 export class ChoroplethComponent implements OnChanges {
    @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
+   @Input() public title: string | undefined;
+
    @ViewChild('choroplethSvg', { read: ViewContainerRef }) svgViewContainer: ViewContainerRef | undefined;
 
    private svg: d3.Selection<SVGElement, any, HTMLElement, any> | undefined;

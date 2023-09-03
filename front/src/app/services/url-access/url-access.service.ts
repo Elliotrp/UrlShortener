@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IListUrlAccessResponse } from 'src/app/interfaces/list-url-access-response.interface';
 import { IUrlAccessAuthorised } from 'src/app/interfaces/url-access-authorised.interface';
 import { IUrlAccessCountry } from 'src/app/interfaces/url-access-country.interface';
+import { IUrlAccessDate } from 'src/app/interfaces/url-access-date.interface';
 import { IUrlAccessDay } from 'src/app/interfaces/url-access-day.interface';
 import { environment } from 'src/environment';
 
@@ -29,6 +30,12 @@ export class UrlAccessService {
    public listUrlAccessDays(urlId: number): Observable<HttpResponse<IListUrlAccessResponse<IUrlAccessDay>>> {
       return this.http.get<IListUrlAccessResponse<IUrlAccessDay>>(
          `${environment.apiUrl}/Url/${urlId}/UrlAccess/day`,
+         { observe: 'response' });
+   }
+
+   public listUrlAccessDates(urlId: number): Observable<HttpResponse<IListUrlAccessResponse<IUrlAccessDate>>> {
+      return this.http.get<IListUrlAccessResponse<IUrlAccessDate>>(
+         `${environment.apiUrl}/Url/${urlId}/UrlAccess/date`,
          { observe: 'response' });
    }
 }

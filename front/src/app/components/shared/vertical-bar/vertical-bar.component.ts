@@ -7,23 +7,25 @@ import { AbstractChartTooltipComponent } from '../chart-tooltip/abstract-chart-t
 import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface';
 
 @Component({
-   selector: 'app-horizontal-bar',
-   templateUrl: './horizontal-bar.component.html',
-   styleUrls: ['./horizontal-bar.component.scss'],
+   selector: 'app-vertical-bar',
+   templateUrl: './vertical-bar.component.html',
+   styleUrls: ['./vertical-bar.component.scss'],
    encapsulation: ViewEncapsulation.None,
 })
-export class HorizontalBarComponent implements OnChanges {
+export class VerticalBarComponent implements OnChanges {
    @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
    @Input() public title: string | undefined;
+   @Input() public tickFrequency: number | undefined;
+   @Input() public showLabels = true;
 
-   @ViewChild('horizontalBarContainer') container: ElementRef | undefined;
-   @ViewChild('horizontalBarSvg', { read: ViewContainerRef }) svgElement: ViewContainerRef | undefined;
-   
+   @ViewChild('verticalBarContainer') container: ElementRef | undefined;
+   @ViewChild('verticalBarSvg', { read: ViewContainerRef }) svgElement: ViewContainerRef | undefined;
+
    private svgg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
    private containerWidth: number | undefined;
-   private x: d3.ScaleLinear<number, number> | any;
-   private margin = { top: 20, right: 30, bottom: 40, left: 100 };
+   private y: d3.ScaleLinear<number, number> | any;
+   private margin = { top: 20, right: 60, bottom: 100, left: 60 };
    private width: number | undefined;
    private height: number | undefined;
 
@@ -33,9 +35,9 @@ export class HorizontalBarComponent implements OnChanges {
          this.ngOnChanges();
       }
    }
-   
+
    constructor(private readonly chartTooltipService: ChartTooltipService) { }
-   
+
    public ngOnChanges(): void {
       this.containerWidth = this.container?.nativeElement.offsetWidth;
       if (!this.containerWidth) {
@@ -43,69 +45,81 @@ export class HorizontalBarComponent implements OnChanges {
       }
 
       this.width = this.containerWidth - this.margin.left - this.margin.right;
-      this.height = [...this.data].length * 45;
-      
+      this.height = 250;
+
       if (this.svgg) {
          this.svgg.remove()
       }
 
-      this.svgg = d3.select<SVGGElement, any>("#horizontalBar")
+      this.svgg = d3.select<SVGGElement, any>("#verticalBar")
          .attr('viewBox', `0 0 ${this.width + this.margin.left + this.margin.right} ${this.height + this.margin.bottom}`)
          .append("g")
          .attr("transform",
             "translate(" + this.margin.left + "," + this.margin.top + ")");
 
-      // Add X axis
-      this.x = d3.scaleLinear()
+      // Add Y axis
+      this.y = d3.scaleLinear()
          .domain([0, Math.max(...[...this.data].map((urlAccess) => (urlAccess[1].relativeCount)))])
-         .range([0, this.width]);
+         .range([this.height, 0]);
 
-      // Y axis
-      var y = d3.scaleBand()
-         .range([0, this.height])
+      // X axis
+      var x = d3.scaleBand()
+         .range([0, this.width])
          .domain([...this.data].map((urlAccess) => urlAccess[0]))
          .padding(.1);
 
       this.svgg.append("g")
-         .call(d3.axisLeft(y)
+         .attr("transform", "translate(0," + this.height + ")")
+         .call(d3.axisBottom(x)
             .tickSizeOuter(0)
-            .tickSizeInner(0)
-            .tickPadding(10));
+            .tickPadding(10)
+            .tickFormat((interval, i) => {
+               if (this.tickFrequency !== undefined) {
+                  return i % this.tickFrequency !== 0 ? " " : interval;
+               } else {
+                  return interval;
+               }
+            }))
+         .selectAll("text")
+         .attr("transform", "translate(-10,0)rotate(-45)")
+         .style("text-anchor", "end");
 
       //Bars
       this.svgg.append("g")
          .selectAll()
          .data(this.data)
          .join("rect")
-         .attr("x", this.x(0))
-         .attr("y", (d) => { return y(d[0]) ?? 0 })
-         .attr("width", (d) => this.getBarWidth(d, -5))
-         .attr("height", y.bandwidth())
+         .attr("y", (d) => this.y(d[1].relativeCount) + 5)
+         .attr("x", (d) => { return x(d[0]) ?? 0 })
+         .attr("height", (d) => this.getBarHeight(d, 5))
+         .attr("width", x.bandwidth())
 
       this.svgg.append("g")
          .classed('round-bar', true)
          .selectAll()
          .data(this.data)
          .join("rect")
-         .attr("x", this.x(0))
-         .attr("y", (d) => { return y(d[0]) ?? 0 })
-         .attr("width", (d) => this.getBarWidth(d))
-         .attr("height", y.bandwidth())
+         .attr("y", (d) => this.y(d[1].relativeCount))
+         .attr("x", (d) => { return x(d[0]) ?? 0 })
+         .attr("height", (d) => this.getBarHeight(d))
+         .attr("width", x.bandwidth())
 
       // labels
-      this.svgg.append('g')
-         .classed('data-label', true)
-         .selectAll()
-         .data(this.data)
-         .join("text")
-         .attr("x", (d) => this.x(d[1].relativeCount))
-         .attr("y", (d) => (y(d[0]) ?? 0) + (y.bandwidth() / 2))
-         .attr("dy", "0.35em")
-         .attr("dx", -4)
-         .text((d) => Math.round(d[1].relativeCount) + '%')
-         .call((text) => text.filter(d => this.x(d[1].relativeCount) - this.x(0) < 25)
-            .classed('outside-bar', true)
-            .attr("dx", +4));
+      if (this.showLabels) {
+         this.svgg.append('g')
+            .classed('data-label', true)
+            .selectAll()
+            .data(this.data)
+            .join("text")
+            .attr("y", (d) => this.y(d[1].relativeCount))
+            .attr("x", (d) => (x(d[0]) ?? 0) + (x.bandwidth() / 2))
+            .attr("dx", "0.35em")
+            .attr("dy", -4)
+            .text((d) => Math.round(d[1].relativeCount) + '%')
+            .call((text) => text.filter(d => this.y(d[1].relativeCount) - this.y(0) < 25)
+               .classed('outside-bar', true)
+               .attr("dy", +4));
+      }
 
       // tooltip
       if (this.tooltipType) {
@@ -133,8 +147,9 @@ export class HorizontalBarComponent implements OnChanges {
       }
    }
 
-   private getBarWidth = (d: [string, IUrlAccessData], offset: number = 0): number => {
-      const width = this.x(d[1].relativeCount) + offset;
-      return width < 0 ? 0 : width;
+   private getBarHeight = (d: [string, IUrlAccessData], offset: number = 0): number => {
+      const chartHeight: number = this.height ?? 0;
+      const height = this.y(d[1].relativeCount) + offset;
+      return height > chartHeight ? 0 : chartHeight - height;
    }
 }
