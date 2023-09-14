@@ -6,6 +6,7 @@ import { IUrlAccessAuthorised } from 'src/app/interfaces/url-access-authorised.i
 import { IUrlAccessCountry } from 'src/app/interfaces/url-access-country.interface';
 import { IUrlAccessDate } from 'src/app/interfaces/url-access-date.interface';
 import { IUrlAccessDay } from 'src/app/interfaces/url-access-day.interface';
+import { IUrlAccessHour } from 'src/app/interfaces/url-access-hour.interface';
 import { environment } from 'src/environment';
 
 @Injectable({
@@ -36,6 +37,12 @@ export class UrlAccessService {
    public listUrlAccessDates(urlId: number): Observable<HttpResponse<IListUrlAccessResponse<IUrlAccessDate>>> {
       return this.http.get<IListUrlAccessResponse<IUrlAccessDate>>(
          `${environment.apiUrl}/Url/${urlId}/UrlAccess/date`,
+         { observe: 'response' });
+   }
+
+   public listUrlAccessHours(urlId: number): Observable<HttpResponse<IListUrlAccessResponse<IUrlAccessHour>>> {
+      return this.http.get<IListUrlAccessResponse<IUrlAccessHour>>(
+         `${environment.apiUrl}/Url/${urlId}/UrlAccess/hour`,
          { observe: 'response' });
    }
 }

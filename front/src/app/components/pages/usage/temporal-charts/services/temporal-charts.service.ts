@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { UrlAccessDataMap } from 'src/app/classes/url-access-data-map.class';
 import { DayOfWeek, DayOfWeekOrder, DayOfWeekName } from 'src/app/enums/day-of-week.enum';
+import { getTimeStringFromHour } from 'src/app/functions/get-time-string-from-hour.function';
 import { IUrlAccessDate } from 'src/app/interfaces/url-access-date.interface';
 import { IUrlAccessDay } from 'src/app/interfaces/url-access-day.interface';
+import { IUrlAccessHour } from 'src/app/interfaces/url-access-hour.interface';
 import { IUrl } from 'src/app/interfaces/url.interface';
 import { UrlAccessDataService } from 'src/app/services/url-access-data.service.ts/url-access-data.service';
 
@@ -66,8 +68,20 @@ export class TemporalChartsService {
          false);
    }
 
+   public getHoursOfTheDayDataMap(urlAccessHours: IUrlAccessHour[], url: IUrl): UrlAccessDataMap {
+      const hoursOfDay: IUrlAccessHour[] = new Array(24);
+      for (let hour = 0; hour <= 23; hour++) {
+         hoursOfDay[hour] = this.getUrlAccessHour(urlAccessHours, hour, url);
+      }
+
+      return this.urlAccessDataService.toUrlAccessDataMap(
+         hoursOfDay,
+         (urlAccess: IUrlAccessHour): string => getTimeStringFromHour(urlAccess.hour),
+         false);
+   }
+
    private getUrlAccessDay(urlAccessDays: IUrlAccessDay[], dayOfWeek: DayOfWeek, url: IUrl): IUrlAccessDay {
-      return urlAccessDays.find(value => value.day === dayOfWeek) ??
+      return urlAccessDays.find(dayAccesses => dayAccesses.day === dayOfWeek) ??
       {
          urlId: url.id,
          day: dayOfWeek,
@@ -94,5 +108,14 @@ export class TemporalChartsService {
          date: new Date(date),
          count: accessesThisMonth.reduce((acc, i) => acc = acc + i.count, 0)
       };
+   }
+
+   private getUrlAccessHour(urlAccessHours: IUrlAccessHour[], hour: number, url: IUrl): IUrlAccessHour {
+      return urlAccessHours.find(hourAccesses => hourAccesses.hour === hour) ??
+      {
+         urlId: url.id,
+         hour: hour,
+         count: 0
+      }
    }
 }

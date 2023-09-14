@@ -11,6 +11,7 @@ import { IUrlAccessDay } from 'src/app/interfaces/url-access-day.interface';
 import { GenericClicksTooltipComponent } from 'src/app/components/shared/chart-tooltip/generic-clicks-tooltip/generic-clicks-tooltip.component';
 import { IUrlAccessDate } from 'src/app/interfaces/url-access-date.interface';
 import { TemporalChartsService } from './services/temporal-charts.service';
+import { IUrlAccessHour } from 'src/app/interfaces/url-access-hour.interface';
 
 @Component({
    templateUrl: './temporal-charts.component.html',
@@ -18,10 +19,11 @@ import { TemporalChartsService } from './services/temporal-charts.service';
 })
 export class TemporalChartsComponent implements OnInit {
    public url: IUrl;
-   public daysOfWeekData: UrlAccessDataMap = new UrlAccessDataMap();
    public genericClicksTooltipType: Type<AbstractChartTooltipComponent> = GenericClicksTooltipComponent;
+   public daysOfWeekData: UrlAccessDataMap = new UrlAccessDataMap();
    public lastThirtyDaysData: UrlAccessDataMap = new UrlAccessDataMap();
    public lastTwelveMonthsData: UrlAccessDataMap = new UrlAccessDataMap();
+   public hoursOfDayData: UrlAccessDataMap = new UrlAccessDataMap()
 
    constructor(
       private readonly urlAccessService: UrlAccessService,
@@ -35,6 +37,7 @@ export class TemporalChartsComponent implements OnInit {
    public ngOnInit(): void {
       this.getUrlAccessDays();
       this.getUrlAccessDates();
+      this.getUrlAccessHours();
    }
 
    private getUrlAccessDates(): void {
@@ -55,5 +58,14 @@ export class TemporalChartsComponent implements OnInit {
             this.daysOfWeekData = this.service.getDaysOfWeekDataMap(urlAccesses, this.url);
          }
       });
+   }
+
+   private getUrlAccessHours(): void {
+      this.urlAccessService.listUrlAccessHours(this.url.id).subscribe((response: HttpResponse<IListUrlAccessResponse<IUrlAccessHour>>) => {
+         if (response.body) {
+            const urlAccesses: IUrlAccessHour[] = response.body.urlAccesses ?? [];
+            this.hoursOfDayData = this.service.getHoursOfTheDayDataMap(urlAccesses, this.url);
+         }
+      })
    }
 }
