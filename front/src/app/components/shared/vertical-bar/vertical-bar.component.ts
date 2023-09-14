@@ -5,6 +5,7 @@ import { IUrlAccessData } from 'src/app/interfaces/url-access-data.interface';
 import { ChartTooltipService } from 'src/app/services/chart-tooltip/chart-tooltip.service';
 import { AbstractChartTooltipComponent } from '../chart-tooltip/abstract-chart-tooltip.component';
 import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface';
+import { createRandomAlphaString } from 'src/app/functions/create-random-alpha-string.function';
 
 @Component({
    selector: 'app-vertical-bar',
@@ -17,17 +18,19 @@ export class VerticalBarComponent implements OnChanges {
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
    @Input() public title: string | undefined;
    @Input() public tickFrequency: number | undefined;
-   @Input() public showLabels = true;
+   @Input() public showPercentLabels = true;
 
    @ViewChild('verticalBarContainer') container: ElementRef | undefined;
    @ViewChild('verticalBarSvg', { read: ViewContainerRef }) svgElement: ViewContainerRef | undefined;
+
+   public svgId: string = createRandomAlphaString(4);
 
    private svgg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
    private containerWidth: number | undefined;
    private y: d3.ScaleLinear<number, number> | any;
    private margin = { top: 20, right: 60, bottom: 100, left: 60 };
    private width: number | undefined;
-   private height: number | undefined;
+   private height = 250;
 
    @HostListener('window:resize')
    private onResize(): void {
@@ -45,17 +48,16 @@ export class VerticalBarComponent implements OnChanges {
       }
 
       this.width = this.containerWidth - this.margin.left - this.margin.right;
-      this.height = 250;
 
       if (this.svgg) {
          this.svgg.remove()
       }
 
-      this.svgg = d3.select<SVGGElement, any>("#verticalBar")
+      this.svgg = d3.select<SVGGElement, any>('#'+ this.svgId)
          .attr('viewBox', `0 0 ${this.width + this.margin.left + this.margin.right} ${this.height + this.margin.bottom}`)
-         .append("g")
-         .attr("transform",
-            "translate(" + this.margin.left + "," + this.margin.top + ")");
+         .append('g')
+         .attr('transform',
+            'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
       // Add Y axis
       this.y = d3.scaleLinear()
@@ -68,57 +70,57 @@ export class VerticalBarComponent implements OnChanges {
          .domain([...this.data].map((urlAccess) => urlAccess[0]))
          .padding(.1);
 
-      this.svgg.append("g")
-         .attr("transform", "translate(0," + this.height + ")")
+      this.svgg.append('g')
+         .attr('transform', 'translate(0,' + this.height + ')')
          .call(d3.axisBottom(x)
             .tickSizeOuter(0)
             .tickPadding(10)
             .tickFormat((interval, i) => {
                if (this.tickFrequency !== undefined) {
-                  return i % this.tickFrequency !== 0 ? " " : interval;
+                  return i % this.tickFrequency !== 0 ? ' ' : interval;
                } else {
                   return interval;
                }
             }))
-         .selectAll("text")
-         .attr("transform", "translate(-10,0)rotate(-45)")
-         .style("text-anchor", "end");
+         .selectAll('text')
+         .attr('transform', 'translate(-10,0)rotate(-45)')
+         .style('text-anchor', 'end');
 
       //Bars
-      this.svgg.append("g")
+      this.svgg.append('g')
          .selectAll()
          .data(this.data)
-         .join("rect")
-         .attr("y", (d) => this.y(d[1].relativeCount) + 5)
-         .attr("x", (d) => { return x(d[0]) ?? 0 })
-         .attr("height", (d) => this.getBarHeight(d, 5))
-         .attr("width", x.bandwidth())
+         .join('rect')
+         .attr('y', (d) => this.y(d[1].relativeCount) + 5)
+         .attr('x', (d) => { return x(d[0]) ?? 0 })
+         .attr('height', (d) => this.getBarHeight(d, 5))
+         .attr('width', x.bandwidth())
 
-      this.svgg.append("g")
+      this.svgg.append('g')
          .classed('round-bar', true)
          .selectAll()
          .data(this.data)
-         .join("rect")
-         .attr("y", (d) => this.y(d[1].relativeCount))
-         .attr("x", (d) => { return x(d[0]) ?? 0 })
-         .attr("height", (d) => this.getBarHeight(d))
-         .attr("width", x.bandwidth())
+         .join('rect')
+         .attr('y', (d) => this.y(d[1].relativeCount))
+         .attr('x', (d) => { return x(d[0]) ?? 0 })
+         .attr('height', (d) => this.getBarHeight(d))
+         .attr('width', x.bandwidth())
 
       // labels
-      if (this.showLabels) {
+      if (this.showPercentLabels) {
          this.svgg.append('g')
             .classed('data-label', true)
             .selectAll()
             .data(this.data)
-            .join("text")
-            .attr("y", (d) => this.y(d[1].relativeCount))
-            .attr("x", (d) => (x(d[0]) ?? 0) + (x.bandwidth() / 2))
-            .attr("dx", "0.35em")
-            .attr("dy", -4)
+            .join('text')
+            .attr('y', (d) => this.y(d[1].relativeCount))
+            .attr('x', (d) => (x(d[0]) ?? 0) + (x.bandwidth() / 2))
+            .attr('dx', '0.35em')
+            .attr('dy', -4)
             .text((d) => Math.round(d[1].relativeCount) + '%')
             .call((text) => text.filter(d => this.y(d[1].relativeCount) - this.y(0) < 25)
                .classed('outside-bar', true)
-               .attr("dy", +4));
+               .attr('dy', +4));
       }
 
       // tooltip

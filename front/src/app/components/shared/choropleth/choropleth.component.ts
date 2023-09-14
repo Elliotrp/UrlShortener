@@ -9,6 +9,7 @@ import { AbstractChartTooltipComponent } from '../chart-tooltip/abstract-chart-t
 import { IUrlAccessData } from 'src/app/interfaces/url-access-data.interface';
 import { byIso } from 'country-code-lookup';
 import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface';
+import { createRandomAlphaString } from 'src/app/functions/create-random-alpha-string.function';
 
 @Component({
    selector: 'app-choropleth',
@@ -23,6 +24,8 @@ export class ChoroplethComponent implements OnChanges {
 
    @ViewChild('choroplethSvg', { read: ViewContainerRef }) svgViewContainer: ViewContainerRef | undefined;
 
+   public svgId: string = createRandomAlphaString(4);
+
    private svg: d3.Selection<SVGElement, any, HTMLElement, any> | undefined;
    private path: d3.GeoPath | undefined;
    private colour: d3.ScaleSequential<string, never>;
@@ -32,7 +35,7 @@ export class ChoroplethComponent implements OnChanges {
    }
 
    public ngOnChanges(): void {
-      this.svg = d3.select("svg");
+      this.svg = d3.select('#'+ this.svgId);
       d3.json<WorldAtlas>('/assets/countries-110m.json').then(this.create);
    }
 

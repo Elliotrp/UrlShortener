@@ -12,7 +12,6 @@ import { byIso } from 'country-code-lookup';
 import { AbstractChartTooltipComponent } from 'src/app/components/shared/chart-tooltip/abstract-chart-tooltip.component';
 import { CountryChartTooltipComponent } from 'src/app/components/shared/chart-tooltip/country-chart-tooltip/country-chart-tooltip.component';
 @Component({
-  selector: 'app-geographic-charts',
   templateUrl: './geographic-charts.component.html',
   styleUrls: ['./geographic-charts.component.scss']
 })

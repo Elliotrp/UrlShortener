@@ -1,3 +1,19 @@
-<app-horizontal-bar [data]="daysOfWeekData" [tooltipType]="dayTooltipType" [title]="'Most Popular Days'"></app-horizontal-bar>
-<app-vertical-bar [data]="lastThirtyDaysData" [tooltipType]="dayTooltipType" [title]="'Last Thirty Days'"
-   [tickFrequency]="3" [showLabels]="false"></app-vertical-bar>
+<app-horizontal-bar
+   [data]="daysOfWeekData"
+   [tooltipType]="genericClicksTooltipType"
+   [title]="'Most Popular Days'">
+</app-horizontal-bar>
+<app-vertical-bar
+   [data]="lastThirtyDaysData"
+   [tooltipType]="genericClicksTooltipType"
+   [title]="'Last Thirty Days'"
+   [tickFrequency]="3"
+   [showPercentLabels]="false">
+</app-vertical-bar>
+<app-vertical-bar
+   [data]="lastTwelveMonthsData"
+   [tooltipType]="genericClicksTooltipType"
+   [title]="'Last Twelve Months'"
+   [tickFrequency]="1"
+   [showPercentLabels]="false">
+</app-vertical-bar>
