@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { UrlService } from '../services/url/url.service';
-import { ErrorCode } from '../enums/error-code.enum';
-import { DeviceService } from '../services/device/device.service';
-import { LocationService } from '../services/location/location.service';
-import { ILocation } from '../interfaces/location.interface';
-import { IDeviceInfo } from '../interfaces/device-info.interface';
-import { IGetUrlRequestQueryParams } from '../interfaces/get-url-request-query-params.interface';
+import { UrlService } from '../../services/url/url.service';
+import { ErrorCode } from '../../enums/error-code.enum';
+import { DeviceService } from '../../services/device/device.service';
+import { LocationService } from '../../services/location/location.service';
+import { ILocation } from '../../interfaces/location.interface';
+import { IDeviceInfo } from '../../interfaces/device-info.interface';
+import { IGetUrlRequestQueryParams } from '../../interfaces/get-url-request-query-params.interface';
 import { switchMap } from 'rxjs';
 
 @Injectable({

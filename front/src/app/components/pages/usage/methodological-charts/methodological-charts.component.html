@@ -1,1 +1,20 @@
-<p>methodological-charts works!</p>
+<app-pie
+   [data] = "authorisedData"
+   [tooltipType]="genericClicksTooltipType"
+   [title]="'Authorised'">
+</app-pie>
+<app-pie
+   [data] = "browserData"
+   [tooltipType]="genericClicksTooltipType"
+   [title]="'Browsers'">
+</app-pie>
+<app-pie
+   [data] = "deviceData"
+   [tooltipType]="genericClicksTooltipType"
+   [title]="'Devices'">
+</app-pie>
+<app-pie
+   [data] = "operatingSystemData"
+   [tooltipType]="genericClicksTooltipType"
+   [title]="'Operating Systems'">
+</app-pie>

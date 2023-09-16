@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UrlShortenerComponent } from './components/pages/url-shortener/url-shortener.component';
-import { ShortKeyGuard } from './guards/short-key.guard';
+import { ShortKeyGuard } from './guards/short-key/short-key.guard';
 import { HoldingComponent } from './components/pages/holding/holding.component';
 import { NotFoundComponent } from './components/pages/not-found/not-found.component';
 import { EnterPasswordComponent } from './components/pages/enter-password/enter-password.component';
