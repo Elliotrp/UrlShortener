@@ -9,6 +9,7 @@ import { UrlInfoModule } from '../../shared/url-info/url-info.module';
 import { MatCardModule } from '@angular/material/card';
 import { TemporalChartsModule } from './temporal-charts/temporal-charts.module';
 import { MethodologicalChartsModule } from './methodological-charts/methodological-charts.module';
+import { LoadingRouterOutletModule } from '../../shared/loading-router-outlet/loading-router-outlet.module';
 
 @NgModule({
    declarations: [UsageComponent],
@@ -16,6 +17,7 @@ import { MethodologicalChartsModule } from './methodological-charts/methodologic
    imports: [
       CommonModule,
       GeographicChartsModule,
+      LoadingRouterOutletModule,
       MatCardModule,
       MatTabsModule,
       MethodologicalChartsModule,

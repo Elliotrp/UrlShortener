@@ -1,4 +1,12 @@
 :host {
-   display: flex;
-   flex-direction: column;
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 30px;
+   padding: 30px 15px;
+}
+
+@media (max-width: 600px) {
+   :host {
+      grid-template-columns: 1fr;
+   }
 }

@@ -1,5 +1,11 @@
+.wrapper {
+   border: 1px solid #000;
+   border-radius: 20px
+}
+
 .title {
    font-size: large;
+   margin-left: 10px;
 }
 
 .data-label {
@@ -8,6 +14,7 @@
    font-weight: bold;
    text-anchor: end;
    fill: white;
+
    .outside-bar {
       text-anchor: start;
       fill: black;
@@ -26,6 +33,7 @@
 
 rect {
    fill: #3f51b5;
+
    &:hover {
       fill: #4d5ebe;
    }
@@ -36,4 +44,3 @@ rect {
       rx: 5px;
    }
 }
-

@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
-import { IUsageResolverData } from './usage-resolver-data.interface';
+import { IUsageResolverData } from '../usage-resolver-data.interface';
 import { UrlLocalStorageService } from 'src/app/services/url-local-storage/url-local-storage.service';
 import { inject } from '@angular/core';
 import { UrlAccessDataService } from 'src/app/services/url-access-data.service.ts/url-access-data.service';

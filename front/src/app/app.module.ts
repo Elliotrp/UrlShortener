@@ -9,6 +9,7 @@ import { EnterPasswordModule } from './components/pages/enter-password/enter-pas
 import { UsageModule } from './components/pages/usage/usage.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingRouterOutletModule } from './components/shared/loading-router-outlet/loading-router-outlet.module';
 
 @NgModule({
    declarations: [
@@ -23,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
       HttpClientModule,
       NotFoundModule,
       EnterPasswordModule,
+      LoadingRouterOutletModule,
       UsageModule
    ],
    bootstrap: [AppComponent]

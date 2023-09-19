@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import { UrlAccessDataMap } from 'src/app/classes/url-access-data-map.class';
 import { AbstractChartTooltipComponent } from '../chart-tooltip/abstract-chart-tooltip.component';
@@ -13,7 +13,7 @@ import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface
    styleUrls: ['./pie.component.scss'],
    encapsulation: ViewEncapsulation.None
 })
-export class PieComponent implements OnChanges {
+export class PieComponent implements AfterViewInit, OnChanges {
    @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
    @Input() public title: string | undefined;
@@ -26,20 +26,28 @@ export class PieComponent implements OnChanges {
 
    private svgg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
    private containerSize: number | undefined;
-   private margin = 70;
+   private margin = 40;
 
    @HostListener('window:resize')
    private onResize(): void {
       if (this.containerSize !== Math.max(
          this.container?.nativeElement.offsetWidth,
          this.container?.nativeElement.offsetHeight)) {
-         this.ngOnChanges();
+         this.createChart();
       }
    }
    
    constructor(private readonly chartTooltipService: ChartTooltipService) { }
 
+   public ngAfterViewInit(): void {
+      this.createChart();
+   }
+
    public ngOnChanges(): void {
+      this.createChart();
+   }
+
+   public createChart(): void {
       this.containerSize = Math.max(
          this.container?.nativeElement.offsetWidth,
          this.container?.nativeElement.offsetHeight);

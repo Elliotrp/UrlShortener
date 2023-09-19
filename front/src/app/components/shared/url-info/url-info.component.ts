@@ -39,7 +39,7 @@ export class UrlInfoComponent {
       });
 
       dialogRef.afterClosed().subscribe((result: IUrlDialogResult) => {
-         if (result.submitted) {
+         if (result?.submitted) {
             this.urlLocalStorageService.removeUrl(url);
          }
       });
@@ -57,7 +57,7 @@ export class UrlInfoComponent {
       });
 
       dialogRef.afterClosed().subscribe((result: IUrlDialogResult) => {
-         if (result.submitted) {
+         if (result?.submitted) {
             this.urlService.setUrlPassword(url.id, result.password).subscribe(
                () => {
                   url.password = !!result.password;

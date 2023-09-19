@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import { feature, mesh } from 'topojson-client';
 import { WorldAtlas } from 'topojson';
@@ -17,7 +17,7 @@ import { createRandomAlphaString } from 'src/app/functions/create-random-alpha-s
    styleUrls: ['./choropleth.component.scss'],
    encapsulation: ViewEncapsulation.None,
 })
-export class ChoroplethComponent implements OnChanges {
+export class ChoroplethComponent implements AfterViewInit, OnChanges {
    @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
    @Input() public title: string | undefined;
@@ -34,7 +34,15 @@ export class ChoroplethComponent implements OnChanges {
       this.colour = d3.scaleSequential(d3.interpolateBlues).domain([0, 100]);
    }
 
+   public ngAfterViewInit(): void {
+      this.createChart();
+   }
+
    public ngOnChanges(): void {
+      this.createChart();
+   }
+
+   public createChart(): void {
       this.svg = d3.select('#'+ this.svgId);
       d3.json<WorldAtlas>('/assets/countries-110m.json').then(this.create);
    }

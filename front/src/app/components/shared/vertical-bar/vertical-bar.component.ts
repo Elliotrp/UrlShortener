@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, Type, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import { UrlAccessDataMap } from 'src/app/classes/url-access-data-map.class';
 import { IUrlAccessData } from 'src/app/interfaces/url-access-data.interface';
@@ -13,7 +13,7 @@ import { createRandomAlphaString } from 'src/app/functions/create-random-alpha-s
    styleUrls: ['./vertical-bar.component.scss'],
    encapsulation: ViewEncapsulation.None,
 })
-export class VerticalBarComponent implements OnChanges {
+export class VerticalBarComponent implements AfterViewInit, OnChanges {
    @Input() public data: UrlAccessDataMap = new UrlAccessDataMap();
    @Input() public tooltipType: Type<AbstractChartTooltipComponent> | undefined;
    @Input() public title: string | undefined;
@@ -35,13 +35,21 @@ export class VerticalBarComponent implements OnChanges {
    @HostListener('window:resize')
    private onResize(): void {
       if (this.containerWidth !== this.container?.nativeElement.offsetWidth) {
-         this.ngOnChanges();
+         this.createChart();
       }
    }
 
    constructor(private readonly chartTooltipService: ChartTooltipService) { }
 
+   public ngAfterViewInit(): void {
+      this.createChart();
+   }
+
    public ngOnChanges(): void {
+      this.createChart();
+   }
+
+   public createChart(): void {
       this.containerWidth = this.container?.nativeElement.offsetWidth;
       if (!this.containerWidth) {
          return;

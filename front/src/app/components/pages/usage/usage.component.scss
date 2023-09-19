@@ -1,7 +1,16 @@
+h1 {
+   text-align: center;
+}
+
 nav {
-   padding-top: 20px;
+   margin-top: 40px;
+   background: whitesmoke;
 }
 
 mat-card {
    margin-top: 50px;
+}
+
+mat-card-content {
+   padding: 0;
 }
