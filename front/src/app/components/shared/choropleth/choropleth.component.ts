@@ -7,9 +7,9 @@ import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import { ChartTooltipService } from 'src/app/services/chart-tooltip/chart-tooltip.service';
 import { AbstractChartTooltipComponent } from '../chart-tooltip/abstract-chart-tooltip.component';
 import { IUrlAccessData } from 'src/app/interfaces/url-access-data.interface';
-import { byIso } from 'country-code-lookup';
 import { IChartTooltipData } from '../chart-tooltip/chart-tooltip-data.interface';
 import { createRandomAlphaString } from 'src/app/functions/create-random-alpha-string.function';
+import { CountryLookupService } from 'src/app/services/country-lookup/country-lookup.service';
 
 @Component({
    selector: 'app-choropleth',
@@ -30,7 +30,10 @@ export class ChoroplethComponent implements AfterViewInit, OnChanges {
    private path: d3.GeoPath | undefined;
    private colour: d3.ScaleSequential<string, never>;
 
-   constructor(private readonly chartTooltipService: ChartTooltipService) {
+   constructor(
+      private readonly chartTooltipService: ChartTooltipService,
+      private readonly countryLookupService: CountryLookupService
+      ) {
       this.colour = d3.scaleSequential(d3.interpolateBlues).domain([0, 100]);
    }
 
@@ -67,7 +70,7 @@ export class ChoroplethComponent implements AfterViewInit, OnChanges {
                   const country: Feature = d as Feature;
                   const urlAccess: IUrlAccessData | undefined = this.data.getItemById(country.id);
                   if (country.id && urlAccess && this.svgViewContainer && this.tooltipType) {
-                     const countryName: string | undefined = byIso(country.id)?.country;
+                     const countryName: string | undefined = this.countryLookupService.byAlpha3Iso(country.id.toString())?.countryName;
                      if (countryName) {
                         const data: IChartTooltipData = {
                            label: countryName,

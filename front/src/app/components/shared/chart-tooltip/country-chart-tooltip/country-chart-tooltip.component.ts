@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractChartTooltipComponent } from '../abstract-chart-tooltip.component';
-import { byCountry } from 'country-code-lookup';
+import { CountryLookupService } from 'src/app/services/country-lookup/country-lookup.service';
 
 @Component({
    templateUrl: './country-chart-tooltip.component.html',
@@ -9,9 +9,13 @@ import { byCountry } from 'country-code-lookup';
 export class CountryChartTooltipComponent extends AbstractChartTooltipComponent implements OnInit {
    public flagClass: string | undefined;
 
+   constructor(private readonly countryLookupService: CountryLookupService) {
+      super()
+   }
+
    public ngOnInit(): void {
       if (this.data) {
-         this.flagClass = `fi fi-${byCountry(this.data.label)?.iso2.toLowerCase()}`;
+         this.flagClass = `fi fi-${this.countryLookupService.byCountryName(this.data.label)?.alphaIso2.toLowerCase()}`;
       }
    }
 }
