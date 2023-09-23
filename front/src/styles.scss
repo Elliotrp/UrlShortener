@@ -3,4 +3,13 @@
 
 body {
    background-color: whitesmoke;
+   margin: 0;
+}
+
+app-root {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   min-height: 100vh;
+   gap: 15px;
 }
