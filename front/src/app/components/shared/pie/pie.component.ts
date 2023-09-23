@@ -36,7 +36,7 @@ export class PieComponent implements AfterViewInit, OnChanges {
          this.createChart();
       }
    }
-   
+
    constructor(private readonly chartTooltipService: ChartTooltipService) { }
 
    public ngAfterViewInit(): void {
@@ -58,15 +58,15 @@ export class PieComponent implements AfterViewInit, OnChanges {
       if (this.svgg) {
          this.svgg.remove()
       }
-      
+
       const radius = (this.containerSize - this.margin) / 2;
 
       // Get colour scale
       const colour: d3.ScaleSequential<string, never> = d3.scaleSequential(d3.interpolateBlues)
          .domain([this.data.size, 0]);
-      
-      this.svgg = d3.select<SVGGElement, any>('#'+ this.svgId)
-         .attr('viewBox', `0 0 ${this.containerSize} ${this.containerSize}`)
+
+      this.svgg = d3.select<SVGGElement, any>('#' + this.svgId)
+         .attr('viewBox', `0 0 ${this.containerSize} ${this.containerSize + (18 * (this.data.size - 1))}`)
          .append('g')
          .attr('transform', 'translate(' + this.containerSize / 2 + ',' + this.containerSize / 2 + ')');
 
@@ -79,9 +79,9 @@ export class PieComponent implements AfterViewInit, OnChanges {
          .outerRadius(radius)
          .padAngle(0.01)
          .cornerRadius(radius / 10);
-      
+
       // Draw arcs
-      var arcs = this.svgg
+      this.svgg
          .selectAll()
          .data(pie([...this.data]))
          .enter()
@@ -113,7 +113,33 @@ export class PieComponent implements AfterViewInit, OnChanges {
             })
             .on('mouseout', () => {
                this.chartTooltipService.hideTooltip();
-            });      
+            });
       }
+
+      // legend
+      const legend = this.svgg
+         .append('g')
+         .attr('transform', `translate(-${radius}, ${radius})`);
+
+      legend.selectAll()
+         .data(pie([...this.data]))
+         .enter()
+         .append('rect')
+         .attr('y', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => 18 * d.index)
+         .attr('width', 10)
+         .attr('height', 10)
+         .attr('fill', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => { return colour(i) })
+         .attr('stroke', 'grey')
+         .style('stroke-width', '1px');
+
+      legend.selectAll()
+         .data(pie([...this.data]))
+         .enter()
+         .append('text')
+         .text((d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => d.data[0])
+         .attr('x', 14)
+         .attr('y', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => 18 * d.index + 10)
+         .style('font-family', 'sans-serif')
+         .style('font-size', `${12}px`);
    }
 }

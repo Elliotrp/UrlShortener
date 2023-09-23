@@ -38,7 +38,7 @@ export class MethodologicalChartsService {
                const urlAccessAuthorised: IUrlAccessAuthorised[] = authorisedResponse.body.urlAccesses ?? [];
                data.authorisedData = this.urlAccessDataService.toUrlAccessDataMap(
                   urlAccessAuthorised,
-                  (urlAccess: IUrlAccessAuthorised) => urlAccess.authorised ? 'Authorised' : 'Unauthorised',
+                  (urlAccess: IUrlAccessAuthorised) => urlAccess.authorised ? 'Authorised' : 'Invalid password',
                   false
                );
             }

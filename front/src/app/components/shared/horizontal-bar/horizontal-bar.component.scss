@@ -30,8 +30,9 @@
    white-space: nowrap;
 }
 
-rect {
+.horizontal-bar {
    fill: #3f51b5;
+
    &:hover {
       fill: #4d5ebe;
    }
