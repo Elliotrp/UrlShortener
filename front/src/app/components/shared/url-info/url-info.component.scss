@@ -1,27 +1,39 @@
 @import "../../../../variables";
 
+h2 {
+   margin: 0 10px 0 10px;
+   font-size: 18px;
+}
+
+a {
+   color: black;
+}
+
+p {
+   margin: 0 0 10px 10px;
+}
+
 .target-url {
    text-overflow: ellipsis;
    white-space: nowrap;
    overflow: hidden;
-   text-align: center;
-   font-weight: 500;
+   font-weight: 400;
 }
 
 .wrapper {
-   display: grid;
-   grid-template-columns: 1fr min-content min-content;
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
    border: 2px solid #3f51b5;
    border-radius: 5px;
    overflow: hidden;
-   padding-left: 10px;
    align-items: center;
    background-color: white;
 }
 
 .buttons {
    display: flex;
-   justify-content: center;
+   flex: 0 0 144px;
 }
 
 .link-button {
@@ -32,27 +44,38 @@
    grid-template-columns: min-content 1fr;
 }
 
+.top-left {
+   flex: 1;
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+}
+
+.bottom {
+   flex-basis: 100%;
+   text-align: left;
+}
+
+
+.flex {
+   display: flex;
+}
+
 @media (max-width: $small-screen-width) {
-   .target-url {
-      margin: 5px 0;
+   p {
+      margin-bottom: 10px;
+   }
+   
+   .buttons {
+      order: 3;
+      gap: 10px;
+   }
+
+   .top-left {
+      justify-content: space-between;
    }
 
    .wrapper {
-      padding-top: 10px;
-      padding-right: 10px;
-      display: flex;
-      flex-direction: column;
-      grid-template-columns: none;
-      gap: 10px;
-      align-items: normal;
-   }
-
-   .link-button {
-      max-width: min-content;
-      margin: auto;
-   }
-
-   .buttons {
-      flex-wrap: wrap;
+      justify-content: center;
    }
 }

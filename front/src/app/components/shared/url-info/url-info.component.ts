@@ -71,4 +71,12 @@ export class UrlInfoComponent {
          }
       });
    }
+
+   public share(): void {
+      navigator.share({
+         title: 'Check out this website!',
+         text: '',
+         url: this.url?.shortUrl,
+      });
+   }
 }

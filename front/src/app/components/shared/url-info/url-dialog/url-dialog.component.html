@@ -1,8 +1,11 @@
 <h2 mat-dialog-title *ngIf="!data.remove">Password protect your link</h2>
 <h2 mat-dialog-title *ngIf="data.remove">{{data.removeMessage}}</h2>
+<!-- View usage data in new tab?
+Cancel continue -->
+ <!-- make this component more generic, get the title in the component. as well as placeholder etc, have it as a data input -->
 <div mat-dialog-content *ngIf="!data.remove">
    <mat-form-field>
-      <input matInput [(ngModel)]="inputText" placeholder="Enter a password" required>
+      <input matInput [(ngModel)]="inputText" placeholder="Enter a password" required (keydown.enter)="set()">
       <mat-error *ngIf="showValidation">Please enter a password</mat-error>
    </mat-form-field>
 </div>
