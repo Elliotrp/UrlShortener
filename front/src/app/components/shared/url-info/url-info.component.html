@@ -6,7 +6,7 @@
             matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
             <mat-icon>content_copy</mat-icon>
          </button>
-         <button mat-icon-button aria-label="Share"
+         <button *ngIf="canShare" mat-icon-button aria-label="Share"
             matTooltip="Share" (click)="share()">
             <mat-icon>share</mat-icon>
          </button>   

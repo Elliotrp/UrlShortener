@@ -15,12 +15,15 @@ import { UrlLocalStorageService } from 'src/app/services/url-local-storage/url-l
 export class UrlInfoComponent {
    @Input() public url: IUrl | undefined;
    @Input() public showActionButtons = false;
+   public canShare: boolean;
 
    constructor(
       public readonly urlLocalStorageService: UrlLocalStorageService,      
       private readonly snackBar: MatSnackBar,
       private readonly dialog: MatDialog,
-      private readonly urlService: UrlService) { }
+      private readonly urlService: UrlService) {
+         this.canShare = isSecureContext && navigator.canShare && navigator.canShare();
+      }
 
    public displayCopiedMessage(): void {
       this.snackBar.open('Copied!', '', {
@@ -73,10 +76,12 @@ export class UrlInfoComponent {
    }
 
    public share(): void {
-      navigator.share({
-         title: 'Check out this website!',
-         text: '',
-         url: this.url?.shortUrl,
-      });
+      if (this.canShare) {
+         navigator.share({
+            title: 'Check out this website!',
+            text: '',
+            url: this.url?.shortUrl,
+         });
+      }
    }
 }
