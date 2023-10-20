@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { IUrlResponse } from 'src/app/interfaces/url-response.interface';
-import { environment } from 'src/environment';
+import { environment } from 'src/environments/environment';
 import { IGetUrlRequestQueryParams } from 'src/app/interfaces/get-url-request-query-params.interface';
 
 @Injectable({

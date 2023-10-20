@@ -12,8 +12,9 @@ packages/
 .vs/
 
 # Sensitive information
-appsettings.Development.json
+appsettings.*.json
 secrets.json
+*.p12
 
 # Logs and temporary files
 logs/

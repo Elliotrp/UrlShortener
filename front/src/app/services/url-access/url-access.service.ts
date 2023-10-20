@@ -10,7 +10,7 @@ import { IUrlAccessDay } from 'src/app/interfaces/url-access-day.interface';
 import { IUrlAccessDevice } from 'src/app/interfaces/url-access-device.interface';
 import { IUrlAccessHour } from 'src/app/interfaces/url-access-hour.interface';
 import { IUrlAccessOperatingSystem } from 'src/app/interfaces/url-access-operating-system.interface';
-import { environment } from 'src/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
    providedIn: 'root'
