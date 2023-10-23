@@ -9,6 +9,9 @@ using Microsoft.OpenApi.Models;
 using UrlShortener.Models;
 using Microsoft.EntityFrameworkCore;
 using UrlShortener.Services;
+using Polly;
+using Polly.Retry;
+using System;
 
 public class Startup
 {
@@ -21,10 +24,18 @@ public class Startup
 
 	public void ConfigureServices(IServiceCollection services)
 	{
+		services.AddResiliencePipeline("db-retry-pipeline", builder =>
+		{
+			builder.AddRetry(new RetryStrategyOptions
+			{
+				ShouldHandle = new PredicateBuilder().Handle<DbUpdateException>(),
+				Delay = TimeSpan.Zero,
+				MaxRetryAttempts = 2
+			});
+		});
+
 		services.AddDbContext<UrlShortenerDbContext>(options =>
 			 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
-		string test = Configuration.GetConnectionString("DefaultConnection");
 
 		services.AddControllers();
 		services.AddSwaggerGen(c =>

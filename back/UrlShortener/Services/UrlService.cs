@@ -8,26 +8,53 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
+using Polly.Registry;
 
 public class UrlService : IUrlService
 {
    private readonly ILogger<IUrlService> logger;
    private readonly UrlShortenerDbContext context;
    private readonly IUrlAccessService urlAccessService;
+   private readonly ResiliencePipelineProvider<string> pollyProvider;
 
    public UrlService(ILogger<IUrlService> logger,
+   ResiliencePipelineProvider<string> pollyProvider,
    UrlShortenerDbContext context,
    IUrlAccessService urlAccessService)
    {
       this.logger = logger;
       this.context = context;
       this.urlAccessService = urlAccessService;
+      this.pollyProvider = pollyProvider;
    }
 
    public async Task<BaseUrlResponse> CreateUrl(CreateUrlRequest request)
    {
-      string shortUrl = RandomStringHelper.GetRandomString(5);
+      var pipeline = this.pollyProvider.GetPipeline("db-retry-pipeline");
+      var response = new BaseUrlResponse();
 
+      try
+      {
+         response = await pipeline.ExecuteAsync(async token => await this.CreateUrlTask(request));
+      }
+      catch (Exception ex)
+      {
+         this.logger.LogError(ex, ex.Message);
+
+         response.Error = new Error
+         {
+            ErrorCode = ErrorCode.SaveError,
+            ErrorMessage = "An error occurred while saving the data. Please try again later."
+         };
+      }
+      
+      return response;
+   }
+
+   private async Task<BaseUrlResponse> CreateUrlTask(CreateUrlRequest request)
+   {
+      string shortUrl = RandomStringHelper.GetRandomString(5);
+   
       Url newUrl = new Url
       {
          ShortUrl = shortUrl,
@@ -35,24 +62,10 @@ public class UrlService : IUrlService
          CreatedDate = DateTime.UtcNow
       };
 
+      this.context.Urls.Add(newUrl);
+      await this.context.SaveChangesAsync();
       BaseUrlResponse response = new BaseUrlResponse(newUrl);
-
-      try
-      {
-         this.context.Urls.Add(newUrl);
-         await this.context.SaveChangesAsync();
-         response = new BaseUrlResponse(newUrl);
-      }
-      catch (Exception ex)
-      {
-         this.logger.LogError(ex, ex.Message);
-         response.Error = new Error
-         {
-            ErrorCode = ErrorCode.SaveError,
-            ErrorMessage = "An error occurred while saving the data. Please try again later."
-         };
-      }
-
+   
       return response;
    }
 
