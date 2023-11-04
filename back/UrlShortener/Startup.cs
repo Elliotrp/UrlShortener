@@ -66,7 +66,7 @@ public class Startup
 		else
 		{
 			app.UseCors(builder => builder
-				.WithOrigins("https://linklockr.uk")
+				.WithOrigins("https://linklockr.uk", "https://www.linklockr.uk")
 				.AllowAnyMethod()
 				.AllowAnyHeader());
 		}
