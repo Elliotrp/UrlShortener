@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IUrl } from 'src/app/interfaces/url.interface';
 import { UrlDialogComponent } from './url-dialog/url-dialog.component';
 import { IUrlDialogResult } from './url-dialog/url-dialog-result.interface';
@@ -12,18 +12,26 @@ import { UrlLocalStorageService } from 'src/app/services/url-local-storage/url-l
   templateUrl: './url-info.component.html',
   styleUrls: ['./url-info.component.scss']
 })
-export class UrlInfoComponent {
+export class UrlInfoComponent implements OnInit {
    @Input() public url: IUrl | undefined;
    @Input() public showActionButtons = false;
-   public canShare: boolean;
+   private shareData: ShareData | undefined;
+   public canShare = false;
 
    constructor(
       public readonly urlLocalStorageService: UrlLocalStorageService,      
       private readonly snackBar: MatSnackBar,
       private readonly dialog: MatDialog,
-      private readonly urlService: UrlService) {
-         this.canShare = isSecureContext && navigator.canShare && navigator.canShare();
-      }
+      private readonly urlService: UrlService)
+      { }
+
+   public ngOnInit(): void {
+      this.shareData = {
+         text: 'Check out this website!',
+         url: this.url?.shortUrl
+      };
+      this.canShare = isSecureContext && !!navigator.canShare && navigator.canShare(this.shareData);
+   }
 
    public displayCopiedMessage(): void {
       this.snackBar.open('Copied!', '', {
@@ -77,11 +85,7 @@ export class UrlInfoComponent {
 
    public share(): void {
       if (this.canShare) {
-         navigator.share({
-            title: 'Check out this website!',
-            text: '',
-            url: this.url?.shortUrl,
-         });
+         navigator.share(this.shareData);
       }
    }
 }

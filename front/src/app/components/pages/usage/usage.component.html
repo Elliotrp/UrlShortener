@@ -1,15 +1,24 @@
-<app-url-info [url]="url"></app-url-info>
-<mat-card>
-   <mat-card-content>
-      <h1 class="mat-h1">Your link has <b>{{accessCount}} clicks</b></h1>
-      <ng-container *ngIf="accessCount > 0">
-         <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-            <a mat-tab-link *ngFor="let link of links"
-               (click)="activeLink = link.path"
-               [routerLink]="link.path"
-               [active]="activeLink == link.path"> {{link.name}} </a>
-         </nav>
-         <mat-tab-nav-panel #tabPanel><app-overlay-loading-router-outlet></app-overlay-loading-router-outlet></mat-tab-nav-panel>
-      </ng-container>
-   </mat-card-content>
-</mat-card>
+<section>
+   <app-url-info [url]="url"></app-url-info>
+</section>
+<section>
+   <mat-card>
+      <mat-card-content>
+         <h1 class="mat-h1">Your link has <b>{{accessCount}} clicks</b></h1>
+         <ng-container *ngIf="accessCount > 0; else placeholder">
+            <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+               <a mat-tab-link *ngFor="let link of links"
+                  (click)="activeLink = link.path"
+                  [routerLink]="link.path"
+                  [active]="activeLink == link.path"> {{link.name}} </a>
+            </nav>
+            <mat-tab-nav-panel #tabPanel><app-overlay-loading-router-outlet></app-overlay-loading-router-outlet></mat-tab-nav-panel>
+         </ng-container>
+         <ng-template #placeholder class="placeholder mat-typography">
+            <p class="placeholder mat-typography">
+               Once your link has been used you will be able to view the usage data here 📊
+            </p>
+         </ng-template>
+      </mat-card-content>
+   </mat-card>
+</section>

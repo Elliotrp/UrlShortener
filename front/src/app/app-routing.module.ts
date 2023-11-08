@@ -23,7 +23,7 @@ const routes: Routes = [
    },
    {
       path: ':shortKey/usage',
-      title: 'Url Usage',
+      title: 'Link Usage',
       loadChildren: () => import('./components/pages/usage/usage.module').then(m => m.UsageModule)
    },
    {

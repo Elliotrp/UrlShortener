@@ -7,10 +7,19 @@ nav {
    background: whitesmoke;
 }
 
+section {
+   margin: 0 10px;
+}
+
 mat-card {
    margin-top: 50px;
 }
 
 mat-card-content {
    padding: 0;
+}
+
+.placeholder {
+   text-align: center;
+   padding: 0 10px;
 }

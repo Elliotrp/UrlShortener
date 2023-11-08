@@ -111,9 +111,9 @@ export class VerticalBarComponent implements AfterViewInit, OnChanges {
          .data(this.data)
          .join('rect')
          .classed('vertical-bar', true)
-         .attr('y', (d) => this.y(d[1].relativeCount))
+         .attr('y', (d) => this.y(d[1].relativeCount) ?? 0)
          .attr('x', (d) => { return x(d[0]) ?? 0 })
-         .attr('height', (d) => this.getBarHeight(d))
+         .attr('height', (d) => this.getBarHeight(d) ?? 0)
          .attr('width', x.bandwidth())
 
       // labels

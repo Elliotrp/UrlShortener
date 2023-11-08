@@ -11,6 +11,7 @@ export class DeviceService {
    constructor(private deviceDetector: DeviceDetectorService) {}
 
    public getDeviceInfo(): IDeviceInfo {
+      console.log(this.deviceDetector.device);
       this.deviceInfo = this.deviceInfo ? this.deviceInfo : {
          browser: browsers[this.deviceDetector.browser],
          operatingSystem: this.deviceDetector.os,

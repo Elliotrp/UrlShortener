@@ -7,6 +7,7 @@ using System;
 using UrlShortener.Dtos;
 using UrlShortener.Helpers;
 using UrlShortener.Services;
+using System.Globalization;
 
 [ApiController]
 [Route("[controller]")]
@@ -51,7 +52,7 @@ public class UrlController : ControllerBase
          CountryCode = countryCode
       };
 
-      if (DateTime.TryParse(dateString, out DateTime dateTime))
+      if (DateTime.TryParse(dateString, new CultureInfo("en-GB"), out DateTime dateTime))
       {
          request.DateTime = dateTime;
       }

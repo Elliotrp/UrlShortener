@@ -27,6 +27,7 @@ export class PieComponent implements AfterViewInit, OnChanges {
    private svgg: d3.Selection<SVGGElement, any, HTMLElement, any> | undefined;
    private containerSize: number | undefined;
    private margin = 40;
+   private fontHeight = 18;
 
    @HostListener('window:resize')
    private onResize(): void {
@@ -66,7 +67,8 @@ export class PieComponent implements AfterViewInit, OnChanges {
          .domain([this.data.size, 0]);
 
       this.svgg = d3.select<SVGGElement, any>('#' + this.svgId)
-         .attr('viewBox', `0 0 ${this.containerSize} ${this.containerSize + (18 * (this.data.size - 1))}`)
+         .attr('viewBox', `0 0 ${this.containerSize} ${this.containerSize + (this.fontHeight * (this.data.size - 1))}`)
+         .attr('width', null)
          .append('g')
          .attr('transform', 'translate(' + this.containerSize / 2 + ',' + this.containerSize / 2 + ')');
 
@@ -125,7 +127,7 @@ export class PieComponent implements AfterViewInit, OnChanges {
          .data(pie([...this.data]))
          .enter()
          .append('rect')
-         .attr('y', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => 18 * d.index)
+         .attr('y', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => this.fontHeight * d.index)
          .attr('width', 10)
          .attr('height', 10)
          .attr('fill', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => { return colour(i) })
@@ -138,7 +140,7 @@ export class PieComponent implements AfterViewInit, OnChanges {
          .append('text')
          .text((d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => d.data[0])
          .attr('x', 14)
-         .attr('y', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => 18 * d.index + 10)
+         .attr('y', (d: d3.PieArcDatum<[string, IUrlAccessData]>, i: number) => this.fontHeight * d.index + 10)
          .style('font-family', 'sans-serif')
          .style('font-size', `${12}px`);
    }

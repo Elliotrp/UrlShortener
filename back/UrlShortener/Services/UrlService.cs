@@ -111,12 +111,16 @@ public class UrlService : IUrlService
                this.logger.LogError(error.ErrorCode.ToString(), error.ErrorMessage);
                response.Error = error;
                createAllAccessRequest.Authorised = false;
-            } else {
+            }
+            else {
                response = new BaseUrlResponse(url);
                createAllAccessRequest.Authorised = true;
             }
 
-            await this.urlAccessService.CreateAllUrlAccess(createAllAccessRequest);
+            if (string.IsNullOrEmpty(url.Password) || !string.IsNullOrEmpty(request.Password))
+            {
+               await this.urlAccessService.CreateAllUrlAccess(createAllAccessRequest);
+            }
          }
       }
       catch (Exception ex)

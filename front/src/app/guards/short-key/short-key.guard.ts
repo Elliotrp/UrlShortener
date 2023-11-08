@@ -28,7 +28,7 @@ export class ShortKeyGuard {
             const queryParams: IGetUrlRequestQueryParams = {
                ...location,
                ...deviceInfo,
-               dateTime: new Date().toLocaleString()
+               dateTime: new Date().toLocaleString('en-GB')
             };
             return this.urlService.getUrl(shortKey, queryParams);
          })
