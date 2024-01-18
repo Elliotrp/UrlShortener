@@ -6,10 +6,9 @@
             matTooltip="Copy to clipboard" (click)="displayCopiedMessage()">
             <mat-icon>content_copy</mat-icon>
          </button>
-         <button *ngIf="canShare" mat-icon-button aria-label="Share"
-            matTooltip="Share" (click)="share()">
+         <button *ngIf="canShare" mat-icon-button aria-label="Share" matTooltip="Share" (click)="share()">
             <mat-icon>share</mat-icon>
-         </button>   
+         </button>
          <a mat-icon-button color="primary" href="{{ url.shortUrl }}" target="_blank"
             matTooltip="Click to visit the shortened URL" class="link-button">
             <mat-icon>launch</mat-icon>
@@ -31,10 +30,8 @@
          </button>
       </ng-container>
    </div>
-   <p class="bottom target-url mat-typography">
-      <span matTooltip="{{url.targetUrl}}" class="target-url mat-typography">
-         {{ url.targetUrl | removeHttp}}
-      </span>
+   <p matTooltip="{{url.targetUrl}}" class="target-url mat-typography">
+      {{ url.targetUrl | removeHttp}}
    </p>
 </div>
 <mat-dialog-content></mat-dialog-content>
