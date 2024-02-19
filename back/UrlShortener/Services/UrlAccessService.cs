@@ -120,6 +120,7 @@ public class UrlAccessService : IUrlAccessService
                this.logger.LogError($"No details were provided for {typeof(TUrlAccess)}");
                return;
             }
+
             urlAccess.Count = 1;
             context.Set<TUrlAccess>().Add(urlAccess);
          }
