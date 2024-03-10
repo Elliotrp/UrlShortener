@@ -9,7 +9,7 @@
          "type": "coreclr",
          "request": "launch",
          "preLaunchTask": "buildBE",
-         "program": "${workspaceFolder}/back/UrlShortener/bin/Debug/net7.0/UrlShortener.dll",
+         "program": "${workspaceFolder}/back/UrlShortener/bin/Debug/net8.0/UrlShortener.dll",
          "args": [],
          "cwd": "${workspaceFolder}/back/UrlShortener",
          "console": "internalConsole",
